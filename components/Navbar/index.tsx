@@ -18,10 +18,17 @@ function Navbar() {
           }
         ></Image>
 
-        <div className=""></div>
-        <Link href="/my-cart">
-          <Image src={cart} width={55} height={55} alt={"cart"}></Image>
-        </Link>
+        <div className="flex gap-3 items-center">
+          <Link href="/sign-in">
+            <p>Sign In</p>
+          </Link>
+          <Link href="/sign-up">
+            <p>Sign Up</p>
+          </Link>
+          <Link href="/my-cart">
+            <Image src={cart} width={55} height={55} alt={"cart"}></Image>
+          </Link>
+        </div>
       </div>
       <div className={style.divider}></div>
     </>
