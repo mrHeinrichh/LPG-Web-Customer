@@ -1,4 +1,5 @@
 import Button from "./Button";
 import Navbar from "./Navbar";
+import InputField from "./InputField";
 
-export { Navbar, Button };
+export { InputField, Navbar, Button };
