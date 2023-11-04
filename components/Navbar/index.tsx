@@ -1,6 +1,8 @@
 import React from "react";
 import style from "./style.module.css";
+import cart from "@/public/cart.svg";
 import Image from "next/image";
+import Link from "next/link";
 function Navbar() {
   return (
     <>
@@ -17,7 +19,9 @@ function Navbar() {
         ></Image>
 
         <div className=""></div>
-        <div className=""></div>
+        <Link href="/my-cart">
+          <Image src={cart} width={55} height={55} alt={"cart"}></Image>
+        </Link>
       </div>
       <div className={style.divider}></div>
     </>
