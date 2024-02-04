@@ -1,44 +1,29 @@
 "use client";
 import { Button, InputField, Navbar } from "@/components/";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import style from "./style.module.css";
-import { API_URL } from "@/env";
+import { useAuthStore } from "@/states";
 
 export default function Home() {
   const router = useRouter();
+  const { user, authenticate } = useAuthStore() as any;
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    if (user) router.push("/");
+  }, [user]);
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch(`${API_URL}auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const { data, status, meta } = await response.json();
-
-      if (status === "success") {
-        localStorage.setItem("user", JSON.stringify(data[0]));
-        localStorage.setItem("token", meta.refresh);
-        router.push("/");
-      }
-    } catch (error) {
-      console.error("Error adding customers:", error);
-    }
+  const handleSubmit = async () => {
+    authenticate({ ...formData });
   };
 
   return (
@@ -67,7 +52,14 @@ export default function Home() {
           </div>
 
           <div className="col-span-2">
-            <Button type="submit">Submit</Button>
+            <Button
+              type="button"
+              onClick={() => {
+                authenticate({ ...formData });
+              }}
+            >
+              Submit
+            </Button>
           </div>
         </form>
       </main>

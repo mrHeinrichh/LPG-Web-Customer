@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 import style from "./style.module.css";
 import { API_URL } from "@/env";
 import Image from "next/image";
-import { post } from "@/config";
+import { patch, post } from "@/config";
 import { useAuthStore } from "@/states";
 
-export default function Home() {
+export default function MyProfile() {
   const router = useRouter();
   const { user, authenticate } = useAuthStore() as any;
 
@@ -18,18 +18,28 @@ export default function Home() {
     contactNumber: "",
     address: "",
     email: "",
-    password: "",
   });
 
   useEffect(() => {
-    if (user) router.push("/");
-  }, [user]);
+    setFormData({
+      name: user.name,
+      contactNumber: user.contactNumber,
+      address: user.address,
+      email: user.email,
+    });
+    setimage(user.image);
+  }, []);
+
+  const [password, setpassword] = useState("");
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
-
+  const handlePassword = (event: any) => {
+    const { name, value } = event.target;
+    setpassword(value);
+  };
   const fileChange = async (event: any) => {
     const form = new FormData();
     form.append("image", event.target.files[0]);
@@ -41,13 +51,23 @@ export default function Home() {
 
   const handleSubmit = async () => {
     try {
-      const { data } = await post(`users`, {
+      const { data } = await patch(`users/${user._id}`, {
         ...formData,
         image,
         type: "Customer",
       });
 
-      console.log(data);
+      if (data.status === "success") router.push("/");
+    } catch (error) {
+      console.error("Error adding customers:", error);
+    }
+  };
+
+  const handleChangePassword = async () => {
+    try {
+      const { data } = await patch(`users/${user._id}/password`, {
+        password,
+      });
       if (data.status === "success") router.push("/");
     } catch (error) {
       console.error("Error adding customers:", error);
@@ -87,17 +107,20 @@ export default function Home() {
             name="name"
             placeholder="Full Name"
             onChange={handleChange}
+            defaultValue={formData.name}
           />
           <InputField
             name="contactNumber"
             placeholder="Contact Number"
             onChange={handleChange}
+            defaultValue={formData.contactNumber}
           />
           <div className="col-span-2">
             <InputField
               name="address"
               placeholder="Address"
               onChange={handleChange}
+              defaultValue={formData.address}
             />
           </div>
           <div className="col-span-2">
@@ -106,23 +129,29 @@ export default function Home() {
               name="email"
               placeholder="Email"
               onChange={handleChange}
+              defaultValue={formData.email}
             />
+          </div>
+
+          <div className="col-span-2">
+            <Button type="button" onClick={handleSubmit}>
+              Update Profile
+            </Button>
+          </div>
+          <div className="">
+            <p className="font-bold text-lg">Change Password</p>
           </div>
           <div className="col-span-2">
             <InputField
               type="password"
               name="password"
               placeholder="Password"
-              onChange={handleChange}
+              onChange={handlePassword}
             />
-          </div>{" "}
-          <div className="col-span-2 flex gap-2">
-            <input type={"checkbox"} onChange={handlePrivacy}></input>
-            <p>I accept the terms and agreements of data privacy</p>
           </div>
           <div className="col-span-2">
-            <Button type="button" onClick={handleSubmit}>
-              Submit
+            <Button type="button" onClick={handleChangePassword}>
+              Change Password
             </Button>
           </div>
         </form>

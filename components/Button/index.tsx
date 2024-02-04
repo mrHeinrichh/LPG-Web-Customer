@@ -1,13 +1,11 @@
 import React from "react";
 import style from "./style.module.css";
 
-function Button({ onClick, type, children, outlined, light }: any) {
+function Button({ onClick, type, children }: any) {
   return (
     <>
       <button
-        className={`${style.button} ${
-          outlined ? style.outlined : style.filled
-        } ${light ? style.light : style.default}`}
+        className={style.button}
         onClick={onClick}
         type={type ?? "button"}
       >
