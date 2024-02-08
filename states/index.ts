@@ -35,6 +35,31 @@ export const useAuthStore = create((set) => ({
   },
 }));
 
+export const useMessagesStore = create((set) => ({
+  messages: [],
+  getMessages: async (user: string) => {
+    const { data } = await get(
+      `messages?filter={"$or": [{"from": "${user}"}, {"to": "${user}"}]}`
+    );
+    if (data.status == "success") {
+      return set(() => ({ messages: data.data }));
+    }
+  },
+  addMessage: async (request: any) => {
+    const { data } = await post(`messages`, request);
+    if (data.status === "success") {
+      return set((state: any) => ({
+        messages: [...state.messages, data.data[0]],
+      }));
+    }
+  },
+  addNewMessage: (data: any) => {
+    return set((state: any) => ({
+      messages: [...state.messages, data],
+    }));
+  },
+}));
+
 export const useAnnouncementsStore = create((set) => ({
   announcements: [],
   getAnnouncements: async () => {
