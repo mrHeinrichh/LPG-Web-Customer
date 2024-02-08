@@ -44,13 +44,7 @@ function Navbar() {
               >
                 Customer Support
               </p>
-              <p
-                onClick={() => {
-                  router.push("/faqs");
-                }}
-              >
-                FAQS
-              </p>
+
               <p
                 onClick={() => {
                   logout();
@@ -77,6 +71,13 @@ function Navbar() {
               </p>
             </>
           )}
+          <p
+            onClick={() => {
+              router.push("/faqs");
+            }}
+          >
+            FAQS
+          </p>
           <Image
             src={cart}
             width={55}
