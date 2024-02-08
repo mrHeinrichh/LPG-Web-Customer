@@ -29,7 +29,9 @@ export const useAuthStore = create((set) => ({
       return set(() => ({ user: data.data[0] }));
     }
   },
-
+  setUser: (user: any) => {
+    return set(() => ({ user: user }));
+  },
   logout: () => {
     return set(() => ({ user: null }));
   },

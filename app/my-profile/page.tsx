@@ -10,7 +10,7 @@ import { useAuthStore } from "@/states";
 
 export default function MyProfile() {
   const router = useRouter();
-  const { user, authenticate } = useAuthStore() as any;
+  const { user, setUser } = useAuthStore() as any;
 
   const [image, setimage] = useState<null | string>(null);
   const [formData, setFormData] = useState({
@@ -19,6 +19,8 @@ export default function MyProfile() {
     address: "",
     email: "",
   });
+  const [password, setpassword] = useState("");
+  const [date, setdate] = useState("");
 
   useEffect(() => {
     setFormData({
@@ -30,16 +32,22 @@ export default function MyProfile() {
     setimage(user.image);
   }, []);
 
-  const [password, setpassword] = useState("");
-
   const handleChange = (event: any) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
+
+  const handleChangeDate = (event: any) => {
+    const { name, value } = event.target;
+    setdate(value);
+  };
+
   const handlePassword = (event: any) => {
     const { name, value } = event.target;
+
     setpassword(value);
   };
+
   const fileChange = async (event: any) => {
     const form = new FormData();
     form.append("image", event.target.files[0]);
@@ -63,6 +71,24 @@ export default function MyProfile() {
     }
   };
 
+  const handleAppointmentSubmit = async () => {
+    try {
+      const { data } = await patch(`users/${user._id}`, {
+        appointmentDate: date,
+        appointmentStatus: "Pending",
+        image,
+        type: "Customer",
+      });
+
+      if (data.status === "success") {
+        setUser(data.data[0]);
+        router.push("/");
+      }
+    } catch (error) {
+      console.error("Error adding customers:", error);
+    }
+  };
+
   const handleChangePassword = async () => {
     try {
       const { data } = await patch(`users/${user._id}/password`, {
@@ -74,14 +100,10 @@ export default function MyProfile() {
     }
   };
 
-  const handlePrivacy = async (event: any) => {
-    console.log(event.target.value);
-  };
-
   return (
     <main>
       <Navbar></Navbar>
-      <main className={style.container}>
+      <div className={style.container}>
         <form className={style.form}>
           <div className="col-span-2">
             <h3 className="font-bold text-lg">Create your account</h3>
@@ -154,8 +176,25 @@ export default function MyProfile() {
               Change Password
             </Button>
           </div>
+
+          <div className="">
+            <p className="font-bold text-lg">Rider Appointment</p>
+          </div>
+          <div className="col-span-2">
+            <InputField
+              type="date"
+              name="date"
+              placeholder="Appointment Date"
+              onChange={handleChangeDate}
+            />
+          </div>
+          <div className="col-span-2">
+            <Button type="button" onClick={handleAppointmentSubmit}>
+              Apply as a rider
+            </Button>
+          </div>
         </form>
-      </main>
+      </div>
     </main>
   );
 }
