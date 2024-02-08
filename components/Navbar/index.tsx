@@ -3,7 +3,6 @@ import React from "react";
 import style from "./style.module.css";
 import cart from "@/public/cart.svg";
 import Image from "next/image";
-import Link from "next/link";
 import { useAuthStore } from "@/states";
 import { useRouter } from "next/navigation";
 
@@ -15,6 +14,9 @@ function Navbar() {
     <>
       <div className={style.container}>
         <Image
+          onClick={() => {
+            router.push("/");
+          }}
           src={
             "https://raw.githubusercontent.com/mrHeinrichh/J.E-Moral-cdn/main/assets/png/logo-main.png"
           }
