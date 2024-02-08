@@ -35,6 +35,16 @@ export const useAuthStore = create((set) => ({
   },
 }));
 
+export const useAnnouncementsStore = create((set) => ({
+  announcements: [],
+  getAnnouncements: async () => {
+    const { data } = await get(`announcements`);
+    if (data.status == "success") {
+      return set(() => ({ announcements: data.data }));
+    }
+  },
+}));
+
 export const useItemStore = create((set) => ({
   items: [],
   getItems: async () => {
