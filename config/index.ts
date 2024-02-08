@@ -1,5 +1,6 @@
 import { API_URL } from "@/env";
 import axios, { Axios } from "axios";
+import { io } from "socket.io-client";
 
 export const AXIOS_INSTANCE: Axios = axios.create({
   baseURL: `${API_URL}api/v1/`,
@@ -20,3 +21,5 @@ export async function patch<T>(uri: string, request: T) {
 export async function remove(uri: string) {
   return await AXIOS_INSTANCE.delete(uri);
 }
+
+export const SOCKET = io(API_URL);
