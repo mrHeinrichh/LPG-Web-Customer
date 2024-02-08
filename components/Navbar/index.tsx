@@ -39,6 +39,13 @@ function Navbar() {
               </p>
               <p
                 onClick={() => {
+                  router.push("/support");
+                }}
+              >
+                Customer Support
+              </p>
+              <p
+                onClick={() => {
                   logout();
                 }}
               >
