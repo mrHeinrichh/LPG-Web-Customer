@@ -35,6 +35,16 @@ export const useAuthStore = create((set) => ({
   },
 }));
 
+export const useFaqsStore = create((set) => ({
+  faqs: [],
+  getFaqs: async () => {
+    const { data } = await get(`faqs`);
+    if (data.status == "success") {
+      return set(() => ({ faqs: data.data }));
+    }
+  },
+}));
+
 export const useMessagesStore = create((set) => ({
   messages: [],
   getMessages: async (user: string) => {

@@ -46,6 +46,13 @@ function Navbar() {
               </p>
               <p
                 onClick={() => {
+                  router.push("/faqs");
+                }}
+              >
+                FAQS
+              </p>
+              <p
+                onClick={() => {
                   logout();
                 }}
               >
