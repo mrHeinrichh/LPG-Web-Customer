@@ -44,7 +44,6 @@ export default function MyProfile() {
 
   const handlePassword = (event: any) => {
     const { name, value } = event.target;
-
     setpassword(value);
   };
 

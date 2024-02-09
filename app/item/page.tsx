@@ -6,7 +6,9 @@ import { useCartStore } from "@/states";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-
+import { FaPlus } from "react-icons/fa";
+import { FaMinus } from "react-icons/fa";
+import { CiCircleMinus, CiCirclePlus } from "react-icons/ci";
 export default function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -52,52 +54,47 @@ export default function Home() {
   }, []);
 
   const increment = () => {
-    setquantity((prev: any) => prev + 1);
+    if (quantity < item.stock) {
+      setquantity((prev: any) => prev + 1);
+    }
   };
 
   const decrement = () => {
-    setquantity((prev: any) => prev - 1);
+    if (quantity > 1) {
+      setquantity((prev: any) => prev - 1);
+    }
   };
 
   return (
     <main>
       <Navbar />
-      <div className="flex gap-5">
-        <div className="">
-          <Image
-            src={item.image}
-            width={250}
-            height={250}
-            alt={item.image}
-          ></Image>
-          <p>{item.description}</p>
+      <div className="flex gap-5 h-96 m-10">
+        <div className="w-1/3 relative">
+          <Image src={item.image} fill alt={item.image} />
         </div>
 
-        <div className="flex flex-col">
-          <p>{item.name}</p>
-          <p>₱{item.customerPrice}</p>
-          <p>Quantity</p>
+        <div className="flex flex-col justify-evenly w-2/3">
+          <p className="text-2xl font-bold">{item.name}</p>
+          <p className="text-3xl">₱{item.customerPrice}.00</p>
+          <p className="">{item.description}</p>
           <div className="flex justify-between items-center">
+            <p>Stock Available: {item.stock ?? 0}</p>
+
             <div className="flex items-center gap-3">
-              <p className="text-4xl" onClick={decrement}>
-                -
-              </p>
-              <p>{quantity}</p>
-              <p className="text-3xl" onClick={increment}>
-                +
-              </p>
+              <CiCircleMinus onClick={decrement} size={30} />
+              <p className="text-xl">{quantity}</p>
+              <CiCirclePlus onClick={increment} size={30} />
             </div>
-            <p>Stock Available: {item.quantity}</p>
           </div>
 
           <Button
             onClick={() => {
               addToCart({ ...item, quantity });
+              router.push("/my-cart");
             }}
           >
             Add to Cart
           </Button>
-          <Button>Buy Now</Button>
         </div>
       </div>
     </main>

@@ -100,8 +100,22 @@ export const useItemStore = create((set) => ({
 export const useCartStore = create((set) => ({
   cart: [],
   addToCart: (item: any) => {
-    return set((state: any) => ({
-      cart: [...state.cart, item],
-    }));
+    return set((state: any) => {
+      const temp = state.cart.find((e: any) => e._id == item._id);
+      if (temp) {
+        return {
+          cart: [
+            ...state.cart.map((e: any) => {
+              if (e._id == item._id) e.quantity += item.quantity;
+              return e;
+            }),
+          ],
+        };
+      }
+
+      return {
+        cart: [...state.cart, item],
+      };
+    });
   },
 }));

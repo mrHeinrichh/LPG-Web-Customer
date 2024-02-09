@@ -5,7 +5,8 @@ import cart from "@/public/cart.svg";
 import Image from "next/image";
 import { useAuthStore } from "@/states";
 import { useRouter } from "next/navigation";
-
+import { FaShoppingCart, FaQuestion, FaRegAddressCard } from "react-icons/fa";
+import { FaRegMessage } from "react-icons/fa6";
 function Navbar() {
   const router = useRouter();
   const { user, logout } = useAuthStore() as any;
@@ -30,20 +31,18 @@ function Navbar() {
         <div className="flex gap-3 items-center">
           {user ? (
             <>
-              <p
+              <FaRegAddressCard
+                size={40}
                 onClick={() => {
                   router.push("/my-profile");
                 }}
-              >
-                My Profile
-              </p>
-              <p
+              />
+              <FaRegMessage
+                size={33}
                 onClick={() => {
-                  router.push("/support");
+                  router.push("/my-profile");
                 }}
-              >
-                Customer Support
-              </p>
+              />
 
               <p
                 onClick={() => {
@@ -71,22 +70,19 @@ function Navbar() {
               </p>
             </>
           )}
-          <p
+
+          <FaQuestion
+            size={28}
             onClick={() => {
               router.push("/faqs");
             }}
-          >
-            FAQS
-          </p>
-          <Image
-            src={cart}
-            width={55}
-            height={55}
-            alt={"cart"}
+          />
+          <FaShoppingCart
+            size={30}
             onClick={() => {
-              router.push("my-cart");
+              router.push("/my-cart");
             }}
-          ></Image>{" "}
+          />
         </div>
       </div>
       <div className={style.divider}></div>
