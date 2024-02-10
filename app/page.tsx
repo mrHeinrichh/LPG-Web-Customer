@@ -18,15 +18,6 @@ export default function Home() {
       <Navbar />
       <Announcements />
 
-      {/* <div className="flex flex-nowrap overflow-x-auto ">
-        {announcements.map((e: any) => {
-          return (
-            <div className="w-screen bg-red-700 p-2" key={e._id}>
-              <p>{e.text}</p>
-            </div>
-          );
-        })}
-      </div> */}
       <div className="w-full grid grid-cols-4 gap-10 place-items-center p-5">
         {items.map((e: any) => (
           <div
