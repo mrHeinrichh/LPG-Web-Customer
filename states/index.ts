@@ -119,3 +119,16 @@ export const useCartStore = create((set) => ({
     });
   },
 }));
+export const useGeoApifyStore = create((set) => ({
+  locations: [],
+  autocomplete: async (search: string) => {
+    if (search != "") {
+      const { data } = await get(`geoapify/autocomplete?search=${search}`);
+      if (data.status == "success") {
+        return set((state: any) => ({
+          locations: data.data[0].features,
+        }));
+      }
+    }
+  },
+}));

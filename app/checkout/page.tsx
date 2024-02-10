@@ -1,26 +1,32 @@
 "use client";
 import { Button, InputField, Navbar } from "@/components";
 import { post } from "@/config";
-import { API_URL } from "@/env";
-import { useAuthStore, useCartStore, useCheckoutStore } from "@/states";
+import {
+  useAuthStore,
+  useCartStore,
+  useCheckoutStore,
+  useGeoApifyStore,
+} from "@/states";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Checkout() {
   const router = useRouter();
+  const { autocomplete, locations } = useGeoApifyStore() as any;
   const searchParams = useSearchParams();
   const { cart } = useCartStore() as any;
   const { user } = useAuthStore() as any;
   const { checkoutItems, addItem, removeItem } = useCheckoutStore() as any;
-
   const [formData, setFormData] = useState({
     contactNumber: "",
     name: "",
     houseLotBlk: "",
-    baranggay: "",
+    barangay: "",
     paymentMethod: "",
   });
+  const [search, setsearch] = useState<any>();
+  const [location, setlocation] = useState<any>();
   const [discountIdImage, setdiscountIdImage] = useState<null | string>(null);
   const [assembly, setassembly] = useState<boolean>(false);
 
@@ -47,22 +53,53 @@ export default function Checkout() {
   };
 
   const createTransaction = async () => {
-    console.log({
+    const { data } = await post("transactions", {
       ...formData,
       assembly,
+      deliveryLocation: location.properties.formatted,
+      long: location.properties.lon,
+      lat: location.properties.lat,
+      to: user._id ?? "",
+      items: cart,
+      type: "Delivery",
     });
 
-    // const { data } = await post("transactions", {
-    //   to: user?._id ?? "",
-    //   items: cart,
-    //   ...formData,
-    // });
-
-    // if (data.status == "success") router.push("/");
+    if (data.status == "success") router.push("/");
   };
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      autocomplete(search);
+      console.log(search);
+    }, 1000);
+    return () => clearTimeout(delayDebounceFn);
+  }, [search]);
+
   return (
     <main>
       <Navbar />
+      <div className="">
+        <input
+          type="text"
+          value={search}
+          onChange={(e: any) => {
+            setsearch(e.target.value);
+          }}
+        />
+      </div>
+      {locations.map((e: any) => {
+        return (
+          <p
+            key={e.properties.formatted}
+            onClick={() => {
+              setsearch(e.properties.formatted);
+              setlocation(e);
+            }}
+          >
+            {e.properties.formatted}
+          </p>
+        );
+      })}
       <InputField
         name="contactNumber"
         placeholder="Contact Number"
@@ -75,7 +112,7 @@ export default function Checkout() {
         onChange={handleChange}
       />{" "}
       <InputField
-        name="baranggay"
+        name="barangay"
         placeholder="Baranggay"
         onChange={handleChange}
       />
