@@ -53,6 +53,30 @@ export default function Checkout() {
   };
 
   const createTransaction = async () => {
+    let request: any = {
+      ...formData,
+      assembly,
+      deliveryLocation: location.properties.formatted,
+      long: location.properties.lon,
+      lat: location.properties.lat,
+      to: user._id ?? "",
+      items: cart,
+      type: "Delivery",
+    };
+
+    if (discountIdImage) {
+      request = {
+        ...formData,
+        assembly,
+        deliveryLocation: location.properties.formatted,
+        long: location.properties.lon,
+        lat: location.properties.lat,
+        to: user._id ?? "",
+        items: cart,
+        type: "Delivery",
+        discountIdImage,
+      };
+    }
     const { data } = await post("transactions", {
       ...formData,
       assembly,
@@ -155,6 +179,23 @@ export default function Checkout() {
           </div>
         );
       })}
+      {discountIdImage ? (
+        <Image
+          src={discountIdImage ?? ""}
+          width={150}
+          height={150}
+          alt={discountIdImage ?? ""}
+        ></Image>
+      ) : (
+        <></>
+      )}
+      <div className="col-span-2">
+        <InputField
+          type="file"
+          placeholder="Choose Image"
+          onChange={fileChange}
+        />
+      </div>
       <Button
         onClick={() => {
           createTransaction();
