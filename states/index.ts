@@ -2,6 +2,20 @@ import { get, patch, post } from "@/config";
 import { API_URL } from "@/env";
 import { create } from "zustand";
 
+export const useDashboardStore = create((set) => ({
+  prices: [],
+  getPricesByDate: async (start: string, end: string, item: string) => {
+    const { data } = await get(
+      `dashboard/prices?start=${start}&end=${end}&item=${item}`
+    );
+    if (data.status == "success") {
+      return set(() => ({
+        prices: data.data,
+      }));
+    }
+  },
+}));
+
 export const useCheckoutStore = create((set) => ({
   checkoutItems: [],
   addItem: (item: any) => {
@@ -119,6 +133,7 @@ export const useCartStore = create((set) => ({
     });
   },
 }));
+
 export const useGeoApifyStore = create((set) => ({
   locations: [],
   autocomplete: async (search: string) => {
@@ -129,6 +144,18 @@ export const useGeoApifyStore = create((set) => ({
           locations: data.data[0].features,
         }));
       }
+    }
+  },
+}));
+
+export const useTransactionsStore = create((set) => ({
+  transactions: [],
+  getTransactions: async (query: string) => {
+    const { data } = await get(`transactions/?${query}`);
+    if (data.status == "success") {
+      return set(() => ({
+        transactions: data.data,
+      }));
     }
   },
 }));

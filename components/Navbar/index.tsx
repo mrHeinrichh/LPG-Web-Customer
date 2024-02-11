@@ -5,7 +5,12 @@ import cart from "@/public/cart.svg";
 import Image from "next/image";
 import { useAuthStore } from "@/states";
 import { useRouter } from "next/navigation";
-import { FaShoppingCart, FaQuestion, FaRegAddressCard } from "react-icons/fa";
+import {
+  FaShoppingCart,
+  FaQuestion,
+  FaRegAddressCard,
+  FaFileAlt,
+} from "react-icons/fa";
 import { FaRegMessage } from "react-icons/fa6";
 function Navbar() {
   const router = useRouter();
@@ -37,13 +42,18 @@ function Navbar() {
                   router.push("/my-profile");
                 }}
               />
+              <FaFileAlt
+                size={28}
+                onClick={() => {
+                  router.push("/my-transactions");
+                }}
+              />
               <FaRegMessage
                 size={33}
                 onClick={() => {
-                  router.push("/my-profile");
+                  router.push("/support");
                 }}
               />
-
               <p
                 onClick={() => {
                   logout();
