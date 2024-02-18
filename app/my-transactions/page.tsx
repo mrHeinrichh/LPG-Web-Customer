@@ -58,6 +58,9 @@ export default function Home() {
         return (
           <div
             key={e._id}
+            onClick={() => {
+              router.push(`/feedback?id=${e._id}`);
+            }}
             className="bg-slate-600 text-white-50 p-3 rounded-lg flex items-center gap-10"
           >
             <Canvas

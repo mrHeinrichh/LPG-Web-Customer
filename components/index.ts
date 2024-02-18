@@ -3,5 +3,6 @@ import Navbar from "./Navbar";
 import InputField from "./InputField";
 import Announcements from "./Announcements";
 import SelectField from "./SelectField";
+import StarRating from "./StarRating";
 
-export { SelectField, Announcements, InputField, Navbar, Button };
+export { StarRating, SelectField, Announcements, InputField, Navbar, Button };

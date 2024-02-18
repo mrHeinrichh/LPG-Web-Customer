@@ -85,6 +85,12 @@ export default function Checkout() {
       lat: location.properties.lat,
       to: user._id ?? "",
       items: cart,
+      statuses: [
+        {
+          createdAt: new Date(),
+          message: `${user.name} created order`,
+        },
+      ],
       type: "Delivery",
     });
 
