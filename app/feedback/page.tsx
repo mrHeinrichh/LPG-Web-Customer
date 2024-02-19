@@ -171,7 +171,7 @@ export default function Checkout() {
           <div className="flex flex-col gap-2 w-1/2">
             {transaction?.items.map((e: any) => {
               return (
-                <div className="flex items-center gap-5">
+                <div key={e._id} className="flex items-center gap-5">
                   <p>Image</p>
                   <div className="">
                     <p className="font-bold text-2xl">
@@ -187,7 +187,7 @@ export default function Checkout() {
           <div className="flex flex-col gap-2 w-1/2">
             {transaction?.statuses.map((e: any) => {
               return (
-                <div className="">
+                <div className="" key={e._id}>
                   <p>{e.message}</p>
                   <p>{e.createdAt}</p>
                 </div>
