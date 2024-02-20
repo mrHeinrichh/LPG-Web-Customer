@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useAnnouncementsStore } from "@/states";
 import { useRouter } from "next/navigation";
-
+import Image from "next/image";
 function Announcements() {
   const router = useRouter();
   const [page, setpage] = useState(0);
@@ -24,9 +24,12 @@ function Announcements() {
     <div className="">
       {announcements[page] ? (
         <div className="w-screen flex justify-center items-center bg-red-700 gap-2 p-10">
-          <p className="text-5xl font-bold text-white-50">
-            {announcements[page].text}
-          </p>
+          <Image
+            src={announcements[page].image}
+            width={150}
+            height={150}
+            alt={announcements[page].image}
+          ></Image>
         </div>
       ) : (
         <></>
