@@ -1,3 +1,10 @@
+
 .button {
-  @apply rounded-xl px-3 py-5 bg-slate-900 text-white-100 text-xl;
+  border-radius: 2rem; 
+  padding: 1rem 4.5rem; 
+  background-color: #1f2937; 
+  color: #f5f7fa; 
+  font-size: 1.25rem; 
+
+  width: 700px;
 }

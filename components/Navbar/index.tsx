@@ -19,80 +19,103 @@ function Navbar() {
   return (
     <>
       <div className={style.container}>
-        <Image
+        <p
           onClick={() => {
             router.push("/");
           }}
-          src={
-            "https://raw.githubusercontent.com/mrHeinrichh/J.E-Moral-cdn/main/assets/png/logo-main.png"
-          }
-          width={100}
-          height={100}
-          alt={
-            "https://raw.githubusercontent.com/mrHeinrichh/J.E-Moral-cdn/main/assets/png/logo-main.png"
-          }
-        ></Image>
+        >
+          J.E MORAL LPG STORE
+        </p>
 
         <div className="flex gap-3 items-center">
           {user ? (
             <>
-              <FaRegAddressCard
-                size={40}
+           
+           <p
+                className={style.navItem}
                 onClick={() => {
-                  router.push("/my-profile");
+                  router.push("/");
                 }}
-              />
-              <FaFileAlt
-                size={28}
+              > 
+              HOME
+              </p>
+              <p
+                className={style.navItem}
+                onClick={() => {
+                  router.push("/announcements");
+                }}
+              > 
+                ANNOUNCEMENTS
+              </p>
+            
+             <p
+                className={style.navItem}
                 onClick={() => {
                   router.push("/my-transactions");
                 }}
-              />
-              <FaRegMessage
-                size={33}
+              > 
+                TRANSACTIONS
+              </p>
+            
+               <p
+                className={style.navItem}
                 onClick={() => {
-                  router.push("/support");
+                  router.push("/faqs");
                 }}
-              />
+              >
+                FAQ's
+              </p>
+              
+             
               <p
+                className={style.navItem}
                 onClick={() => {
                   logout();
                 }}
               >
                 Logout
               </p>
+              <FaShoppingCart
+                size={30}
+                onClick={() => {
+                  router.push("/my-cart");
+                }}
+              />
+             <FaRegAddressCard
+                size={40}
+                onClick={() => {
+                  router.push("/my-profile");
+                }}
+              />
+                <FaRegMessage
+                size={33}
+                onClick={() => {
+                  router.push("/support");
+                }}
+              />
             </>
+            
           ) : (
             <>
               <p
+                className={style.signInUp}
                 onClick={() => {
                   router.push("sign-in");
                 }}
               >
-                Sign In
-              </p>
+                SIGN IN
+                </p>
+                <p>/</p>
               <p
+                className={style.signInUp}
                 onClick={() => {
                   router.push("sign-up");
                 }}
               >
-                Sign Up
+                SIGN UP
               </p>
             </>
           )}
-
-          <FaQuestion
-            size={28}
-            onClick={() => {
-              router.push("/faqs");
-            }}
-          />
-          <FaShoppingCart
-            size={30}
-            onClick={() => {
-              router.push("/my-cart");
-            }}
-          />
         </div>
       </div>
       <div className={style.divider}></div>

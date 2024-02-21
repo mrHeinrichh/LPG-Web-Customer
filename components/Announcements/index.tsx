@@ -23,11 +23,11 @@ function Announcements() {
   return (
     <div className="">
       {announcements[page] ? (
-        <div className="w-screen flex justify-center items-center bg-red-700 gap-2 p-10">
+        <div className="w-screen flex justify-center items-center gap-2 p-10">
           <Image
             src={announcements[page].image}
-            width={150}
-            height={150}
+            width={800}
+            height={800}
             alt={announcements[page].image}
           ></Image>
         </div>

@@ -25,44 +25,58 @@ export default function Home() {
   const handleSubmit = async () => {
     authenticate({ ...formData });
   };
-
   return (
     <main>
-      <Navbar></Navbar>
-      <main className={style.container}>
-        <form onSubmit={handleSubmit} className={style.form}>
-          <div className="col-span-2">
-            <h3 className="font-bold text-lg">Enter your credentials</h3>
-          </div>
-          <div className="col-span-2">
-            <InputField
-              type="email"
-              name="email"
-              placeholder="Email"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="col-span-2">
-            <InputField
-              type="password"
-              name="password"
-              placeholder="Password"
-              onChange={handleChange}
-            />
-          </div>
+      <Navbar />
+      <div className={style.cardContainer}>
+        <div className={`${style.container} ${style.card}`}>
+      <div className={style.cardContainer}>
+        <div className={style.container}>
+ 
 
-          <div className="col-span-2">
-            <Button
-              type="button"
-              onClick={() => {
-                authenticate({ ...formData });
-              }}
-            >
-              Submit
-            </Button>
+          <div className={style.formContainer}>
+            <form onSubmit={handleSubmit} className={style.form}>
+              <div className="col-span-2">
+              <div className="flex justify-center items-center">
+  <h3 className="font-bold text-lg">SIGN IN</h3>
+</div>
+              </div>
+              <div className="col-span-2">
+                <InputField
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="col-span-2">
+                <InputField
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  onChange={handleChange}
+                />
+              </div>
+
+                  <div className="col-span-2">
+                  <div className="flex justify-center items-center">
+                  <Button
+                  type="button"
+                  onClick={() => {
+                    authenticate({ ...formData });
+                  }}
+                >
+                  Submit
+                </Button>
+</div>
+              
+              </div>
+            </form>
           </div>
-        </form>
-      </main>
+        </div>
+          </div>
+          </div>
+      </div>
     </main>
   );
 }
