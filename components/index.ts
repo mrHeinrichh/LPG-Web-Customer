@@ -5,4 +5,5 @@ import Announcements from "./Announcements";
 import SelectField from "./SelectField";
 import StarRating from "./StarRating";
 import CartButton from "./CartButton";
-export { CartButton, StarRating, SelectField, Announcements, InputField, Navbar, Button };
+import CheckoutButton from "./CheckoutButton";
+export { CheckoutButton ,CartButton, StarRating, SelectField, Announcements, InputField, Navbar, Button };

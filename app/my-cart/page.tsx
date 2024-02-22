@@ -1,5 +1,5 @@
 "use client";
-import { Button, InputField, Navbar } from "@/components";
+import { CheckoutButton, InputField, Navbar } from "@/components";
 import { post } from "@/config";
 import { API_URL } from "@/env";
 import { useAuthStore, useCartStore, useCheckoutStore } from "@/states";
@@ -49,32 +49,56 @@ export default function Home() {
   return (
     <main>
       <Navbar />
-
+      <div className="pr-56 pl-56 pt-24 pb-12">
+      <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4">
       {cart.map((e: any) => {
         return (
-          <div key={e._id} className="flex items-center">
-            <input
-              type="checkbox"
+          <div key={e._id} className="flex items-center p-16">
+<div className="w-96 h-96 relative rounded-md overflow-hidden">
+              <Image src={e.image} width={250} height={250} alt={e.image}style={{ borderRadius: "15px" }} ></Image>
+              </div>
+            <div className="">
+
+              <h5>{e.name}</h5>
+              <br />
+              <p>Quantity: {e.quantity}</p>
+              <br />
+              <p>₱{e.customerPrice}</p>
+
+
+
+            </div>
+            <div className="ml-80"> 
+
+<input
+                type="checkbox"
+                style={{ transform: "scale(1.5)" }}
               onChange={(event: any) => {
                 const { checked } = event.target;
                 toggleItem(e, checked);
               }}
             ></input>
-            <Image src={e.image} width={250} height={250} alt={e.image}></Image>
-            <div className="">
-              <p>Name: {e.name}</p>
-              <p>Quantity: {e.quantity}</p>
             </div>
+            
           </div>
+
+          
         );
       })}
-      <Button
+          
+          <div className=" ">
+            
+      <CheckoutButton
         onClick={() => {
           router.push("/checkout");
         }}
       >
         Checkout
-      </Button>
+      </CheckoutButton>
+    </div>
+     
+        </div>
+      </div>
     </main>
   );
 }
