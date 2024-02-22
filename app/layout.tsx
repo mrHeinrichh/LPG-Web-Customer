@@ -23,7 +23,7 @@ export default function RootLayout({
     if (!authStore.user && !pathName.includes("sign-up")) {
       router.push("/sign-in");
     }
-  }, [authStore.user, pathName]);
+  }, [authStore.user, pathName, router]); // Include router in the dependency array
 
   return (
     <html lang="en">

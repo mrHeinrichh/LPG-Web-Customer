@@ -11,106 +11,73 @@ import {
   FaRegAddressCard,
   FaFileAlt,
 } from "react-icons/fa";
-import { FaRegMessage } from "react-icons/fa6";
-function Navbar() {
+import { FaRegMessage } from "react-icons/fa6";function Navbar() {
   const router = useRouter();
   const { user, logout } = useAuthStore() as any;
 
   return (
     <>
       <div className={style.container}>
-        <p
-          onClick={() => {
-            router.push("/");
-          }}
-        >
-          J.E MORAL LPG STORE
-        </p>
+        <p onClick={() => router.push("/")}>J.E MORAL LPG STORE</p>
 
         <div className="flex gap-3 items-center">
           {user ? (
             <>
-           
-           <p
+              <p
                 className={style.navItem}
-                onClick={() => {
-                  router.push("/");
-                }}
-              > 
-              HOME
+                onClick={() => router.push("/")}
+              >
+                HOME
               </p>
               <p
                 className={style.navItem}
-                onClick={() => {
-                  router.push("/announcements");
-                }}
-              > 
+                onClick={() => router.push("/announcements")}
+              >
                 ANNOUNCEMENTS
               </p>
-            
-             <p
-                className={style.navItem}
-                onClick={() => {
-                  router.push("/my-transactions");
-                }}
-              > 
-                TRANSACTIONS
-              </p>
-            
-               <p
-                className={style.navItem}
-                onClick={() => {
-                  router.push("/faqs");
-                }}
-              >
-                FAQ's
-              </p>
-              
-             
               <p
                 className={style.navItem}
-                onClick={() => {
-                  logout();
-                }}
+                onClick={() => router.push("/my-transactions")}
+              >
+                TRANSACTIONS
+              </p>
+              <p
+                className={style.navItem}
+                onClick={() => router.push("/faqs")}
+              >
+                FAQ&apos;s {/* Updated to use HTML entity */}
+              </p>
+              <p
+                className={style.navItem}
+                onClick={() => logout()}
               >
                 Logout
               </p>
               <FaShoppingCart
                 size={30}
-                onClick={() => {
-                  router.push("/my-cart");
-                }}
+                onClick={() => router.push("/my-cart")}
               />
-             <FaRegAddressCard
+              <FaRegAddressCard
                 size={40}
-                onClick={() => {
-                  router.push("/my-profile");
-                }}
+                onClick={() => router.push("/my-profile")}
               />
-                <FaRegMessage
+              <FaRegMessage
                 size={33}
-                onClick={() => {
-                  router.push("/support");
-                }}
+                onClick={() => router.push("/support")}
               />
             </>
-            
           ) : (
             <>
               <p
                 className={style.signInUp}
-                onClick={() => {
-                  router.push("sign-in");
-                }}
+                onClick={() => router.push("sign-in")}
               >
                 SIGN IN
-                </p>
-                <p>/</p>
+              </p>
+              <p>/</p>
               <p
                 className={style.signInUp}
-                onClick={() => {
-                  router.push("sign-up");
-                }}
+                onClick={() => router.push("sign-up")}
               >
                 SIGN UP
               </p>
@@ -122,5 +89,6 @@ function Navbar() {
     </>
   );
 }
+
 
 export default Navbar;

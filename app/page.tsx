@@ -26,8 +26,8 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, onClick }) => (
         alt={item.image}
         className="item-image"
       ></Image>
-      <p className="text-3xl font-bold px-4 py-2">{item.name}</p> {/* Larger text, padding */}
-      <p className="text-2xl px-4 py-2">₱{item.customerPrice}.00</p> {/* Larger text, padding */}
+      <p className="text-3xl font-bold px-4 py-2">{item.name}</p>
+      <p className="text-2xl px-4 py-2">₱{item.customerPrice}.00</p>
     </div>
   </div>
 );
@@ -42,43 +42,40 @@ export default function Home() {
 
   useEffect(() => {
     getItems();
-  }, []);
+  }, [getItems]);
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-
-      // You can adjust the threshold value based on when you want to hide/show the navbar
       const threshold = 100;
 
       setIsNavbarVisible(scrollPosition < threshold);
     };
 
-    // Attach the event listener when the component mounts
     window.addEventListener("scroll", handleScroll);
 
-    // Detach the event listener when the component unmounts
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []); // Empty dependency array to ensure the effect runs only once on mount
+  }, []);
 
   const renderCard = (title: string, items: any[]) => (
     <div className="products">
-    <div className="card">
-      <p className="font-bold text-5xl mb-4">{title}</p> {/* Larger and bolder text */}
-      <div className="flex items-center gap-4">
-        {items.map((e: any) => (
-          <ItemCard
-            key={e._id}
-            item={e}
-            onClick={() => {
-              router.push(`/item?id=${e._id}`);
-            }}
-          />
-        ))}
+      <div className="card">
+        <p className="font-bold text-5xl mb-4">{title}</p>
+        <div className="flex items-center gap-4">
+          {items.map((e: any) => (
+            <ItemCard
+              key={e._id}
+              item={e}
+              onClick={() => {
+                router.push(`/item?id=${e._id}`);
+              }}
+            />
+          ))}
+        </div>
       </div>
-      </div>
-      </div>
+    </div>
   );
   
   const imageUrls = [
@@ -90,30 +87,31 @@ export default function Home() {
 
     "https://raw.githubusercontent.com/mrHeinrichh/J.E-Moral-cdn/main/assets/company%20logo/pheonix.png",
   ];
-   return (
+  return (
     <main>
       {isNavbarVisible && <Navbar />}
-     
-      <div style={{ backgroundColor: 'white' }} className="flex items-center p-8"> {/* Inline style for white background */}
-      <div style={{ padding: '70px' }}>
-        <h1 style={{ fontWeight: 'bold', whiteSpace: 'pre-line' }}>
-          "Fueling your
-          <br />
-          daily needs with
-          <br />
-          our clean Energy"
-        </h1>
-        <p>We deliver safe and fast to your doorstep!</p>
+      <div style={{ backgroundColor: 'white' }} className="flex items-center p-8">
+        <div style={{ padding: '70px' }}>
+          <h1 style={{ fontWeight: 'bold', whiteSpace: 'pre-line' }}>
+            &quot;Fueling your
+            <br />
+            daily needs with
+            <br />
+            our clean Energy&quot;
+          </h1>
+          <p>We deliver safe and fast to your doorstep!</p>
+        </div>
+        <div className="ml-auto pr-56">
+          <Image
+            src="https://raw.githubusercontent.com/mrHeinrichh/J.E-Moral-cdn/main/assets/lpg-header.png"
+            alt="Image Description"
+            width={600}
+            height={600}
+          />
+        </div>
       </div>
-      <div className="ml-auto pr-56"> 
-        <img
-          src="https://raw.githubusercontent.com/mrHeinrichh/J.E-Moral-cdn/main/assets/lpg-header.png"
-          alt="Image Description"
-          style={{ width: '600px', height: '600px' }}
-        />
-      </div>
-    </div>
-       <div className="bg-black p-8">
+
+      <div className="bg-black p-8">
         <div className="grid grid-cols-5 gap-4">
           {imageUrls.map((imageUrl, index) => (
             <div
@@ -138,8 +136,6 @@ export default function Home() {
         {renderCard("Refill Tanks", refillTanks)}
         {renderCard("Accessories", accessories)}
       </div>
-
-      
     </main>
   );
 }

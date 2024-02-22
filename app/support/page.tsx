@@ -1,6 +1,6 @@
 "use client";
 import { Button, InputField, Navbar } from "@/components/";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import style from "./style.module.css";
 import { API_URL } from "@/env";
@@ -24,15 +24,17 @@ export default function Support() {
 
   useEffect(() => {
     getMessages(user._id);
+
     function onCreatedMssage(data: any) {
       addNewMessage(data.data[0]);
     }
 
+    // Include 'addNewMessage', 'getMessages', and 'user._id' in the dependency array
     SOCKET.on(`createdMessage/${user._id}`, onCreatedMssage);
     return () => {
       SOCKET.off(`createdMessage/${user._id}`, onCreatedMssage);
     };
-  }, []);
+  }, [addNewMessage, getMessages, user._id]);
 
   const handleChange = (event: any) => {
     const { value } = event.target;

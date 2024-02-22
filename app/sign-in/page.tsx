@@ -15,7 +15,7 @@ export default function Home() {
 
   useEffect(() => {
     if (user) router.push("/");
-  }, [user]);
+  }, [user, router]); // Include 'router' in the dependency array
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
@@ -25,57 +25,54 @@ export default function Home() {
   const handleSubmit = async () => {
     authenticate({ ...formData });
   };
+
   return (
     <main>
       <Navbar />
       <div className={style.cardContainer}>
         <div className={`${style.container} ${style.card}`}>
-      <div className={style.cardContainer}>
-        <div className={style.container}>
- 
-
-          <div className={style.formContainer}>
-            <form onSubmit={handleSubmit} className={style.form}>
-              <div className="col-span-2">
-              <div className="flex justify-center items-center">
-  <h3 className="font-bold text-lg">SIGN IN</h3>
-</div>
-              </div>
-              <div className="col-span-2">
-                <InputField
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="col-span-2">
-                <InputField
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  onChange={handleChange}
-                />
-              </div>
-
+          <div className={style.cardContainer}>
+            <div className={style.container}>
+              <div className={style.formContainer}>
+                <form onSubmit={handleSubmit} className={style.form}>
                   <div className="col-span-2">
-                  <div className="flex justify-center items-center">
-                  <Button
-                  type="button"
-                  onClick={() => {
-                    authenticate({ ...formData });
-                  }}
-                >
-                  Submit
-                </Button>
-</div>
-              
+                    <div className="flex justify-center items-center">
+                      <h3 className="font-bold text-lg">SIGN IN</h3>
+                    </div>
+                  </div>
+                  <div className="col-span-2">
+                    <InputField
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    <InputField
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    <div className="flex justify-center items-center">
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          authenticate({ ...formData });
+                        }}
+                      >
+                        Submit
+                      </Button>
+                    </div>
+                  </div>
+                </form>
               </div>
-            </form>
+            </div>
           </div>
         </div>
-          </div>
-          </div>
       </div>
     </main>
   );

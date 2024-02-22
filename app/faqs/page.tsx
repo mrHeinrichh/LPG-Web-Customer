@@ -8,7 +8,7 @@ export default function Faqs() {
 
   useEffect(() => {
     getFaqs();
-  }, []);
+  }, [getFaqs]);  // Add getFaqs to the dependency array
 
   return (
     <main>

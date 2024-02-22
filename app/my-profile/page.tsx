@@ -30,7 +30,7 @@ export default function MyProfile() {
       email: user.email,
     });
     setimage(user.image);
-  }, []);
+  }, [user.address, user.contactNumber, user.email, user.image, user.name]); // Include user properties in the dependency array
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;

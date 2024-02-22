@@ -145,7 +145,7 @@ export default function Checkout() {
       console.log(search);
     }, 1000);
     return () => clearTimeout(delayDebounceFn);
-  }, [search]);
+  }, [search,autocomplete]);
 
   const setq1Rate = (rate: number) => {
     setq1rating(rate);

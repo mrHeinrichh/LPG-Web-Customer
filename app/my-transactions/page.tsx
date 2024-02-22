@@ -23,8 +23,8 @@ export default function Home() {
   });
 
   useEffect(() => {
-    getTransactions(`filter={"to": "${user._id}", "__t": "Delivery"}`);
-  }, []);
+    getTransactions(`filter={"to": "${user?._id}", "__t": "Delivery"}`);
+  }, [getTransactions, user?._id]); // Include getTransactions and user._id in the dependency array
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;

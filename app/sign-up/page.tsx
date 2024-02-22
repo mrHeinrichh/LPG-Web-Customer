@@ -23,7 +23,7 @@ export default function Home() {
 
   useEffect(() => {
     if (user) router.push("/");
-  }, [user]);
+  }, [user, router]); // Include 'router' in the dependency array
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
@@ -34,7 +34,7 @@ export default function Home() {
     const form = new FormData();
     form.append("image", event.target.files[0]);
     const { data } = await post<FormData>("upload/image", form);
-    if (data.status == "success") {
+    if (data.status === "success") {
       setimage(data.data[0]?.path ?? "");
     }
   };

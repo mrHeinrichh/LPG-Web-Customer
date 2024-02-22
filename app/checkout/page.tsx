@@ -103,7 +103,7 @@ export default function Checkout() {
       console.log(search);
     }, 1000);
     return () => clearTimeout(delayDebounceFn);
-  }, [search]);
+  }, [search,autocomplete]);
 
   return (
     <main>

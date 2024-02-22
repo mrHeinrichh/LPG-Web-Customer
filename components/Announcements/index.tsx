@@ -1,8 +1,10 @@
-"use client";
+// Importing React and other necessary modules
 import React, { useEffect, useState } from "react";
 import { useAnnouncementsStore } from "@/states";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import Image from "next/image";
+
+// Announcements component
 function Announcements() {
   const router = useRouter();
   const [page, setpage] = useState(0);
@@ -10,14 +12,14 @@ function Announcements() {
 
   useEffect(() => {
     getAnnouncements();
-  }, []);
+  }, [getAnnouncements]); // Include getAnnouncements in the dependency array
 
   const increment = () => {
     if (page < announcements.length - 1) setpage((prev: number) => prev + 1);
   };
 
   const decrement = () => {
-    if (page != 0) setpage((prev: number) => prev - 1);
+    if (page !== 0) setpage((prev: number) => prev - 1);
   };
 
   return (
@@ -29,7 +31,7 @@ function Announcements() {
             width={800}
             height={800}
             alt={announcements[page].image}
-          ></Image>
+          />
         </div>
       ) : (
         <></>
@@ -55,4 +57,5 @@ function Announcements() {
   );
 }
 
+// Exporting the Announcements component as the default export
 export default Announcements;

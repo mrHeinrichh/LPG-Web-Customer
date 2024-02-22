@@ -22,6 +22,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+
 export default function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -42,6 +43,8 @@ export default function Home() {
   });
   const [quantity, setquantity] = useState<number>(1);
   const { getPricesByDate, prices } = useDashboardStore() as any;
+
+
   const data = useMemo(() => {
     let temp: any = [];
 
@@ -95,13 +98,14 @@ export default function Home() {
     });
 
     return temp;
-  }, [prices]);
+  }, [prices, timeFilter, units]);
   useEffect(() => {
     const startDate = new Date();
     const endDate = new Date();
     startDate.setDate(startDate.getDate() - units * getMutiplier(timeFilter));
     getPricesByDate(startDate.toISOString(), endDate.toISOString(), id);
-  }, [timeFilter, units, id]);
+  }, [timeFilter, units, id, getPricesByDate]);
+
   useEffect(() => {
     const start = async () => {
       try {
@@ -126,7 +130,7 @@ export default function Home() {
     };
 
     start();
-  }, []);
+  }, [timeFilter, units, id, getPricesByDate]);
 
   const increment = () => {
     if (quantity < item.stock) {
