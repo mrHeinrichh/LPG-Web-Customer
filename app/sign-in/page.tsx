@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import style from "./style.module.css";
 import { useAuthStore } from "@/states";
-
 export default function Home() {
   const router = useRouter();
   const { user, authenticate } = useAuthStore() as any;
@@ -15,9 +14,9 @@ export default function Home() {
 
   useEffect(() => {
     if (user) router.push("/");
-  }, [user, router]); // Include 'router' in the dependency array
+  }, [user, router]);
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
@@ -26,9 +25,13 @@ export default function Home() {
     authenticate({ ...formData });
   };
 
+  const handleSignUpClick = () => {
+    router.push('/sign-up'); // Replace '/signup' with the actual path of your sign-up page
+  };
+
   return (
-    <main>
-      <Navbar />
+    <main className={style.pageContainer}>
+      <Navbar></Navbar>
       <div className={style.cardContainer}>
         <div className={`${style.container} ${style.card}`}>
           <div className={style.cardContainer}>
@@ -38,7 +41,16 @@ export default function Home() {
                   <div className="col-span-2">
                     <div className="flex justify-center items-center">
                       <h3 className="font-bold text-lg">SIGN IN</h3>
+
                     </div>
+                    
+                  </div>
+
+                  <div className="col-span-2">
+                  <p className={style.tagLine}>
+   &ldquo;Fueling Convenience, Order Your LPG Tanks with Ease!&rdquo;
+</p>
+
                   </div>
                   <div className="col-span-2">
                     <InputField
@@ -56,6 +68,8 @@ export default function Home() {
                       onChange={handleChange}
                     />
                   </div>
+                 
+                 
                   <div className="col-span-2">
                     <div className="flex justify-center items-center">
                       <Button
@@ -64,9 +78,19 @@ export default function Home() {
                           authenticate({ ...formData });
                         }}
                       >
-                        Submit
+                        Sign in
                       </Button>
                     </div>
+                  </div>
+                  <div className="col-span-2">
+                  <p className={style.signupText}>
+   Don&apos;t have an account?{' '}
+   <a href="#" onClick={handleSignUpClick}>
+      Sign up here!
+   </a>
+</p>
+
+                    
                   </div>
                 </form>
               </div>
@@ -74,6 +98,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <div className={style.pageBackground}></div>
     </main>
   );
 }

@@ -1,5 +1,5 @@
 "use client";
-import { Button, InputField, Navbar, SelectField } from "@/components";
+import { CartButton, InputField, Navbar, SelectField } from "@/components";
 import { get } from "@/config";
 import { API_URL } from "@/env";
 import { useCartStore, useDashboardStore } from "@/states";
@@ -147,35 +147,51 @@ export default function Home() {
   return (
     <main>
       <Navbar />
-      <div className="flex gap-5 h-96 m-10">
-        <div className="w-1/3 relative">
-          <Image src={item.image} fill alt={item.image} />
-        </div>
+      <div className="pr-56 pl-56 pt-24 pb-12">
+      <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4">
+      <div className="flex gap-5 h-96 m-6">
+    <div className="w-96 h-96 relative rounded-md overflow-hidden">
+      <Image src={item.image} fill alt={item.image} />
+    </div>
 
-        <div className="flex flex-col justify-evenly w-2/3">
-          <p className="text-2xl font-bold">{item.name}</p>
-          <p className="text-3xl">₱{item.customerPrice}.00</p>
-          <p className="">{item.description}</p>
-          <div className="flex justify-between items-center">
-            <p>Stock Available: {item.stock ?? 0}</p>
+    <div className="flex flex-col justify-evenly w-2/3 pl-24">
+      <p className="text-2xl font-bold">{item.name}</p>
+      <p className="text-3xl">₱{item.customerPrice}.00</p>
+      <p className="">{item.description}</p>
+      <div className="flex justify-between items-center">
+        <p>Stock Available: {item.stock ?? 0}</p>
 
-            <div className="flex items-center gap-3">
-              <CiCircleMinus onClick={decrement} size={30} />
-              <p className="text-xl">{quantity}</p>
-              <CiCirclePlus onClick={increment} size={30} />
-            </div>
-          </div>
-
-          <Button
-            onClick={() => {
-              addToCart({ ...item, quantity });
-              router.push("/my-cart");
-            }}
-          >
-            Add to Cart
-          </Button>
+        <div className="flex items-center gap-3 pr-3">
+          <CiCircleMinus onClick={decrement} size={30} />
+          <p className="text-xl">{quantity}</p>
+          <CiCirclePlus onClick={increment} size={30} />
         </div>
       </div>
+
+      <div className="pl-60">
+        <CartButton
+          onClick={() => {
+            addToCart({ ...item, quantity });
+            router.push("/my-cart");
+          }}
+        >
+          Add to Cart
+        </CartButton>
+      </div>
+    </div>
+  </div>
+        </div>
+        
+        <div className="flex items-center justify-center mt-16">
+    <div className="border-t border-gray-300 w-1/4 mr-4"></div>
+    <div className="inline-block px-4 bg-white text-xl font-bold">Price Forecasts</div>
+    <div className="border-t border-gray-300 w-1/4 ml-4"></div>
+  </div>
+
+    </div>
+    <div className="pr-20 pl-20">
+    <div className="bg-white border border-gray-200 rounded-lg shadow-md p-10 mt-8">
+ 
       <SelectField
         options={timeFilterOption}
         name={"Time Filter"}
@@ -193,7 +209,8 @@ export default function Home() {
           const { name, value } = e.target;
           setunits(value);
         }}
-      ></InputField>
+          ></InputField>
+            <div className="mt-8"></div>
       <LineChart
         width={1300}
         height={300}
@@ -223,6 +240,9 @@ export default function Home() {
           activeDot={{ r: 8 }}
         />
       </LineChart>
+        </div>
+        </div>
     </main>
+
   );
 }

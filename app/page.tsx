@@ -63,7 +63,7 @@ export default function Home() {
     <div className="products">
       <div className="card">
         <p className="font-bold text-5xl mb-4">{title}</p>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-24 p-16">
           {items.map((e: any) => (
             <ItemCard
               key={e._id}
@@ -101,7 +101,7 @@ export default function Home() {
           </h1>
           <p>We deliver safe and fast to your doorstep!</p>
         </div>
-        <div className="ml-auto pr-56">
+        <div className="ml-auto pr-49">
           <Image
             src="https://raw.githubusercontent.com/mrHeinrichh/J.E-Moral-cdn/main/assets/lpg-header.png"
             alt="Image Description"
@@ -131,7 +131,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 p-16">
         {renderCard("Brand New Tanks", brandNewTanks)}
         {renderCard("Refill Tanks", refillTanks)}
         {renderCard("Accessories", accessories)}
