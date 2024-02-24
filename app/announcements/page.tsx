@@ -1,6 +1,5 @@
 "use client";
 import { Announcements, Navbar } from "@/components";
-
 import {
   useAuthStore,
   useCartStore,
@@ -20,12 +19,10 @@ export default function Home() {
     contactNumber: "",
   });
 
-
-
   return (
     <main>
       <Navbar />
-     <Announcements/>
+      <Announcements />
     </main>
   );
 }

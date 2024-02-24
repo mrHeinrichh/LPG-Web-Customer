@@ -115,6 +115,8 @@ export const useCartStore = create((set) => ({
   cart: [],
   addToCart: (item: any) => {
     return set((state: any) => {
+      console.log(item);
+      
       const temp = state.cart.find((e: any) => e._id == item._id);
       if (temp) {
         return {

@@ -1,7 +1,7 @@
 // Importing React and other necessary modules
 import React, { useEffect, useState } from "react";
 import { useAnnouncementsStore } from "@/states";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 // Announcements component
