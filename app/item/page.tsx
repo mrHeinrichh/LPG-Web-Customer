@@ -26,7 +26,7 @@ import {
 export default function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { cart, addToCart } = useCartStore() as any;
+  const { addToCart } = useCartStore() as any;
   const id = searchParams.get("id");
   const [units, setunits] = useState(5);
   const [timeFilter, settimeFilter] = useState<TimeFilter>("Daily");

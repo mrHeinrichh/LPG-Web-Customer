@@ -1,12 +1,10 @@
 // Importing React and other necessary modules
 import React, { useEffect, useState } from "react";
 import { useAnnouncementsStore } from "@/states";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 // Announcements component
 function Announcements() {
-  const router = useRouter();
   const [page, setpage] = useState(0);
   const { getAnnouncements, announcements } = useAnnouncementsStore() as any;
 
