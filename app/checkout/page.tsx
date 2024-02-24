@@ -1,23 +1,16 @@
 "use client";
 import { Button, InputField, Navbar } from "@/components";
 import { post } from "@/config";
-import {
-  useAuthStore,
-  useCartStore,
-  useCheckoutStore,
-  useGeoApifyStore,
-} from "@/states";
+import { useAuthStore, useCartStore, useGeoApifyStore } from "@/states";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Checkout() {
   const router = useRouter();
   const { autocomplete, locations } = useGeoApifyStore() as any;
-  const searchParams = useSearchParams();
   const { cart } = useCartStore() as any;
   const { user } = useAuthStore() as any;
-  const { checkoutItems, addItem, removeItem } = useCheckoutStore() as any;
   const [formData, setFormData] = useState({
     contactNumber: "",
     name: "",
@@ -29,10 +22,6 @@ export default function Checkout() {
   const [location, setlocation] = useState<any>();
   const [discountIdImage, setdiscountIdImage] = useState<null | string>(null);
   const [assembly, setassembly] = useState<boolean>(false);
-
-  useEffect(() => {
-    console.log(checkoutItems);
-  }, [checkoutItems]);
 
   const fileChange = async (event: any) => {
     const form = new FormData();
@@ -53,30 +42,6 @@ export default function Checkout() {
   };
 
   const createTransaction = async () => {
-    let request: any = {
-      ...formData,
-      assembly,
-      deliveryLocation: location.properties.formatted,
-      long: location.properties.lon,
-      lat: location.properties.lat,
-      to: user._id ?? "",
-      items: cart,
-      type: "Delivery",
-    };
-
-    if (discountIdImage) {
-      request = {
-        ...formData,
-        assembly,
-        deliveryLocation: location.properties.formatted,
-        long: location.properties.lon,
-        lat: location.properties.lat,
-        to: user._id ?? "",
-        items: cart,
-        type: "Delivery",
-        discountIdImage,
-      };
-    }
     const { data } = await post("transactions", {
       ...formData,
       assembly,
@@ -91,6 +56,7 @@ export default function Checkout() {
           message: `${user.name} created order`,
         },
       ],
+      discountIdImage: discountIdImage ? discountIdImage : null,
       type: "Delivery",
     });
 
@@ -100,10 +66,9 @@ export default function Checkout() {
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       autocomplete(search);
-      console.log(search);
     }, 1000);
     return () => clearTimeout(delayDebounceFn);
-  }, [search,autocomplete]);
+  }, [search, autocomplete]);
 
   return (
     <main>
@@ -134,13 +99,13 @@ export default function Checkout() {
         name="contactNumber"
         placeholder="Contact Number"
         onChange={handleChange}
-      />{" "}
-      <InputField name="name" placeholder="Full Name" onChange={handleChange} />{" "}
+      />
+      <InputField name="name" placeholder="Full Name" onChange={handleChange} />
       <InputField
         name="houseLotBlk"
         placeholder="House | Lot | Blk."
         onChange={handleChange}
-      />{" "}
+      />
       <InputField
         name="barangay"
         placeholder="Baranggay"
@@ -176,15 +141,6 @@ export default function Checkout() {
           />
         </div>
       </div>
-      {checkoutItems.map((e: any) => {
-        return (
-          <div key={e._id}>
-            <p>Name: {e.name}</p>
-            <p>Quantity: {e.quantity}</p>
-            <Image src={e.image} width={250} height={250} alt={e.image}></Image>
-          </div>
-        );
-      })}
       {discountIdImage ? (
         <Image
           src={discountIdImage ?? ""}
@@ -202,6 +158,15 @@ export default function Checkout() {
           onChange={fileChange}
         />
       </div>
+      {cart.map((e: any) => {
+        return (
+          <div key={e._id}>
+            <p>Name: {e.name}</p>
+            <p>Quantity: {e.quantity}</p>
+            <Image src={e.image} width={250} height={250} alt={e.image}></Image>
+          </div>
+        );
+      })}
       <Button
         onClick={() => {
           createTransaction();

@@ -115,8 +115,6 @@ export const useCartStore = create((set) => ({
   cart: [],
   addToCart: (item: any) => {
     return set((state: any) => {
-      console.log(item);
-      
       const temp = state.cart.find((e: any) => e._id == item._id);
       if (temp) {
         return {
@@ -131,6 +129,16 @@ export const useCartStore = create((set) => ({
 
       return {
         cart: [...state.cart, item],
+      };
+    });
+  },
+  deleteItems: (items: any[]) => {
+    return set((state: any) => {
+      const temp = state.cart.filter(
+        (e: any) => !items.find((item: any) => item._id == e._id)
+      );
+      return {
+        cart: [...temp],
       };
     });
   },
