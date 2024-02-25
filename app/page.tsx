@@ -27,7 +27,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, onClick }) => (
         className="item-image"
       ></Image>
       <p className="text-3xl font-bold px-4 py-2">{item.name}</p>
-      <p className="text-2xl px-4 py-2">₱{item.customerPrice}.00</p>
+      <p className="text-2xl px-4 py-2">₱{item.customerPrice}</p>
     </div>
   </div>
 );
@@ -36,9 +36,18 @@ export default function Home() {
 
   const router = useRouter();
   const { items, getItems } = useItemStore() as any;
-  const brandNewTanks = useMemo(() => items.filter((e: any) => e.category == "Brand New Tanks"), [items]);
-  const refillTanks = useMemo(() => items.filter((e: any) => e.category == "Refill Tanks"), [items]);
-  const accessories = useMemo(() => items.filter((e: any) => e.category == "Accessories"), [items]);
+  const brandNewTanks = useMemo(
+    () => items.filter((e: any) => e.category == "Brand New Tanks"),
+    [items]
+  );
+  const refillTanks = useMemo(
+    () => items.filter((e: any) => e.category == "Refill Tanks"),
+    [items]
+  );
+  const accessories = useMemo(
+    () => items.filter((e: any) => e.category == "Accessories"),
+    [items]
+  );
 
   useEffect(() => {
     getItems();
@@ -77,7 +86,7 @@ export default function Home() {
       </div>
     </div>
   );
-  
+
   const imageUrls = [
     "https://raw.githubusercontent.com/mrHeinrichh/J.E-Moral-cdn/main/assets/company%20logo/petron.png",
     "https://raw.githubusercontent.com/mrHeinrichh/J.E-Moral-cdn/main/assets/company%20logo/regasco.png",
@@ -90,9 +99,12 @@ export default function Home() {
   return (
     <main>
       {isNavbarVisible && <Navbar />}
-      <div style={{ backgroundColor: 'white' }} className="flex items-center p-8">
-        <div style={{ padding: '70px' }}>
-          <h1 style={{ fontWeight: 'bold', whiteSpace: 'pre-line' }}>
+      <div
+        style={{ backgroundColor: "white" }}
+        className="flex items-center p-8"
+      >
+        <div style={{ padding: "70px" }}>
+          <h1 style={{ fontWeight: "bold", whiteSpace: "pre-line" }}>
             &quot;Fueling your
             <br />
             daily needs with

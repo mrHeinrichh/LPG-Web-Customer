@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 export default function Checkout() {
   const router = useRouter();
   const { autocomplete, locations } = useGeoApifyStore() as any;
-  const { cart } = useCartStore() as any;
+  const { cart, resetItems } = useCartStore() as any;
   const { user } = useAuthStore() as any;
   const [formData, setFormData] = useState({
     contactNumber: "",
@@ -58,9 +58,13 @@ export default function Checkout() {
       ],
       discountIdImage: discountIdImage ? discountIdImage : null,
       type: "Delivery",
+      priceType: "Customer",
     });
 
-    if (data.status == "success") router.push("/");
+    if (data.status == "success") {
+      resetItems();
+      router.push("/");
+    }
   };
 
   useEffect(() => {

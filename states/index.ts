@@ -142,6 +142,13 @@ export const useCartStore = create((set) => ({
       };
     });
   },
+  resetItems: () => {
+    return set(() => {
+      return {
+        cart: [],
+      };
+    });
+  },
 }));
 
 export const useGeoApifyStore = create((set) => ({
