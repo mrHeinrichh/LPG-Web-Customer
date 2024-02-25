@@ -169,3 +169,37 @@ export const useTransactionsStore = create((set) => ({
     }
   },
 }));
+
+export const usePriceStore = create((set) => ({
+  prices: [],
+  reasons: [],
+  getPrices: async (
+    page: number = 1,
+    limit: number = 5,
+    filter = "{}",
+    populate = ""
+  ) => {
+    const { data } = await get(
+      `prices?page=${page}&limit=${limit}&filter=${filter}&populate=${populate}`
+    );
+
+    if (data.status == "success") {
+      return set(() => ({
+        prices: data.data,
+      }));
+    }
+  },
+  getReasons: async (page: number = 1, limit: number = 5, filter = "{}") => {
+    const { data } = await get(
+      `prices?page=${page}&limit=${limit}&filter=${filter}&populate=item`
+    );
+    if (data.status == "success") {
+      return set(() => ({
+        reasons: data.data.map((e: any) => {
+          e.name = e.item.name;
+          return e;
+        }),
+      }));
+    }
+  },
+}));

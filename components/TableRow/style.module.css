@@ -1,0 +1,21 @@
+.styled_table {
+  @apply w-full;
+}
+
+.styled_table thead tr {
+  text-align: left;
+  @apply bg-black-500;
+}
+
+.styled_table th,
+.styled_table td {
+  @apply p-5;
+}
+
+.styled_table tbody tr:nth-of-type(even) {
+  @apply bg-black-500;
+}
+
+.styled_table tbody tr.active-row {
+  @apply bg-black-900;
+}

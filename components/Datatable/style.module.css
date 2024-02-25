@@ -1,0 +1,20 @@
+.styled_table {
+  @apply w-full;
+}
+
+.styled_table thead tr {
+  text-align: left;
+  @apply bg-white-100;
+}
+
+.styled_table th,
+.styled_table td {
+  @apply p-2;
+}
+
+.styled_table tbody tr {
+  @apply bg-white-100 border-b-8 border-grey-50;
+}
+
+.styled_table tbody tr.active-row {
+}

@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-}
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
@@ -30,7 +28,7 @@
 }
 
 body {
-  background: white; 
+  background: white;
   min-height: 100vh;
 }
 
@@ -53,10 +51,11 @@ h4 {
 h5 {
   @apply text-h5;
 }
-.products {
 
+.products {
   padding: 50px;
 }
+
 .bg-black {
   background-color: black;
   height: 190px;
@@ -79,5 +78,5 @@ h5 {
 }
 .header-image {
   position: relative;
-  height: 900px; 
+  height: 900px;
 }

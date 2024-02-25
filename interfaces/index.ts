@@ -11,3 +11,7 @@ export interface ISelectField {
   onChange: (e: any) => void;
 }
 export type TimeFilter = "Daily" | "Weekly" | "Monthly" | "Yearly";
+export interface ISearchFilter {
+  key: string;
+  type: "string" | "number";
+}

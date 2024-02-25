@@ -1,5 +1,28 @@
 import { MUTIPLIERS } from "@/constants";
-import { TimeFilter } from "@/interfaces";
+import { TimeFilter, ISearchFilter } from "@/interfaces";
+
+export function isNumber(string: string) {
+  return /^[0-9]*$/.test(string);
+}
+
+export function getSearchFilterQuery(
+  searchFilters: ISearchFilter[],
+  string: string
+) {
+  const parsed = searchFilters.map((e: any) => {
+    if (e.type === "string") {
+      return `{ "${e.key}": {"$regex": "${string}", "$options": "i" }}`;
+    }
+
+    if (e.type === "number") {
+      return isNumber(string) ? `{"${e.key}": ${string}}` : "";
+    }
+  });
+
+  const filtered = parsed.filter((e: any) => e != "");
+  const joined = filtered.join(",");
+  return `{ "$or": [ ${joined} ] }`;
+}
 
 export function getStartDayDate(date: Date): Date {
   const now = date.getTime();

@@ -22,6 +22,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { ReasonsTable } from "./components";
 
 export default function Home() {
   const router = useRouter();
@@ -189,6 +190,7 @@ export default function Home() {
           <div className="border-t border-gray-300 w-1/4 ml-4"></div>
         </div>
       </div>
+
       <div className="pr-20 pl-20">
         <div className="bg-white border border-gray-200 rounded-lg shadow-md p-10 mt-8">
           <SelectField
@@ -240,6 +242,7 @@ export default function Home() {
             />
           </LineChart>
         </div>
+        <ReasonsTable />
       </div>
     </main>
   );
