@@ -8,6 +8,9 @@ import CartButton from "./CartButton";
 import CheckoutButton from "./CheckoutButton";
 import Datatable from "./Datatable";
 import TableRow from "./TableRow";
+import CartDeleteButton from "./CartDeleteButton";
+import ChangePasswordButton from "./ChangePasswordButton";
+
 
 export {
   TableRow,
@@ -20,4 +23,6 @@ export {
   InputField,
   Navbar,
   Button,
+  CartDeleteButton,
+  ChangePasswordButton,
 };

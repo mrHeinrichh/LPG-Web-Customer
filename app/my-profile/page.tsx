@@ -1,5 +1,5 @@
 "use client";
-import { Button, InputField, Navbar } from "@/components/";
+import { Button, CartButton, ChangePasswordButton, InputField, Navbar } from "@/components/";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import style from "./style.module.css";
@@ -7,6 +7,7 @@ import { API_URL } from "@/env";
 import Image from "next/image";
 import { patch, post } from "@/config";
 import { useAuthStore } from "@/states";
+import UpdateProfileButton from "@/components/UpdateProfileButton";
 
 export default function MyProfile() {
   const router = useRouter();
@@ -101,30 +102,36 @@ export default function MyProfile() {
 
   return (
     <main>
-      <Navbar></Navbar>
-      <div className={style.container}>
+      <Navbar />
+      
+      <div className="col-span-2 flex justify-center">
         <form className={style.form}>
-          <div className="col-span-2">
+          <div className="col-span-3">
             <h3 className="font-bold text-lg">Create your account</h3>
           </div>
-          {image ? (
+          <div className="">  {image ? (
+            
             <Image
               src={image ?? ""}
-              width={150}
-              height={150}
+              width={450}
+              height={350}
               alt={image ?? ""}
             ></Image>
+            
           ) : (
             <></>
           )}
-          <div className="col-span-2">
+            <br />
             <InputField
               type="file"
               placeholder="Choose Image"
               onChange={fileChange}
             />
           </div>
-          <InputField
+        
+          <div className="col-span-2 pl-16">
+            
+              <InputField
             name="name"
             placeholder="Full Name"
             onChange={handleChange}
@@ -136,15 +143,14 @@ export default function MyProfile() {
             onChange={handleChange}
             defaultValue={formData.contactNumber}
           />
-          <div className="col-span-2">
+
             <InputField
               name="address"
               placeholder="Address"
               onChange={handleChange}
               defaultValue={formData.address}
             />
-          </div>
-          <div className="col-span-2">
+        
             <InputField
               type="email"
               name="email"
@@ -152,46 +158,33 @@ export default function MyProfile() {
               onChange={handleChange}
               defaultValue={formData.email}
             />
-          </div>
-
-          <div className="col-span-2">
-            <Button type="button" onClick={handleSubmit}>
-              Update Profile
-            </Button>
-          </div>
-          <div className="">
-            <p className="font-bold text-lg">Change Password</p>
-          </div>
-          <div className="col-span-2">
+              <hr className="border-t my-4 w-full" />
+              <p className="font-bold text-lg">Change Password</p>
             <InputField
               type="password"
               name="password"
               placeholder="Password"
               onChange={handlePassword}
             />
-          </div>
-          <div className="col-span-2">
-            <Button type="button" onClick={handleChangePassword}>
+          <br />
+              <ChangePasswordButton type="button" onClick={handleChangePassword}>
               Change Password
-            </Button>
+            </ChangePasswordButton>
+          </div>
+        
+       
+
+          <div className="flex justify-center col-span-2">
+            <UpdateProfileButton type="button" onClick={handleSubmit}>
+              Update Profile
+            </UpdateProfileButton>
+            
           </div>
 
-          <div className="">
-            <p className="font-bold text-lg">Rider Appointment</p>
-          </div>
-          <div className="col-span-2">
-            <InputField
-              type="date"
-              name="date"
-              placeholder="Appointment Date"
-              onChange={handleChangeDate}
-            />
-          </div>
-          <div className="col-span-2">
-            <Button type="button" onClick={handleAppointmentSubmit}>
-              Apply as a rider
-            </Button>
-          </div>
+      
+         
+           
+         
         </form>
       </div>
     </main>

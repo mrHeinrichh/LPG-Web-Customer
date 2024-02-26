@@ -9,8 +9,7 @@ import {
 } from "@/states";
 import { useQRCode } from "next-qrcode";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-export default function Home() {
+import { useEffect, useState } from "react";export default function Home() {
   const { Canvas } = useQRCode();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -50,35 +49,50 @@ export default function Home() {
 
     if (data.status == "success") router.push("/");
   };
-
   return (
     <main>
       <Navbar />
-      {transactions.map((e: any) => {
-        return (
-          <div
-            key={e._id}
-            onClick={() => {
-              router.push(`/feedback?id=${e._id}`);
-            }}
-            className="bg-slate-600 text-white-50 p-3 rounded-lg flex items-center gap-10"
-          >
-            <Canvas
-              text={e._id ?? ""}
-              options={{
-                errorCorrectionLevel: "M",
-                margin: 3,
-                scale: 4,
-                width: 200,
-              }}
-            />
-            <div className="flex flex-col gap-3">
-              <p className="text-2xl">{e.status}</p>
-              <p>P{e.total}.00</p>
+      <div className="pr-56 pl-56 p-16">
+        <h4 className="flex justify-center items-center font-bold">
+          My Transaction History
+        </h4>
+        {transactions.map((e: any, index: number) => {
+          return (
+            <div key={e._id}>
+              <div
+                onClick={() => {
+                  router.push(`/feedback?id=${e._id}`);
+                }}
+                className="p-3 rounded-lg flex items-center gap-10 pr-28 pl-28 pt-16 pb-16 shadow-xl cursor-pointer"
+                style={{ backgroundColor: "#ffffff" }}
+              >
+                <div className="flex flex-col gap-3">
+                  <p className="text-2xl font-bold">{`Order #${index + 1}`}</p>
+                  <Canvas
+                    text={e._id ?? ""}
+                    options={{
+                      errorCorrectionLevel: "M",
+                      margin: 3,
+                      scale: 4,
+                      width: 200,
+                    }}
+                  />
+                </div>
+                <div className="flex flex-col gap-3">
+                  <p className="text-2xl">
+                    Transaction Number: {e._id}
+                  </p>
+                  <p className="text-2xl">Order Status: {e.status}</p>
+                  <p className="text-2xl">Total Price: ₱{e.total}.00</p>
+                </div>
+              </div>
+              {index < transactions.length - 1 && (
+                <hr className="border-t my-4 w-full" />
+              )}
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </main>
   );
 }
