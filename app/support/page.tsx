@@ -1,6 +1,6 @@
 "use client";
-import { Button, InputField, Navbar } from "@/components/";
-import { useRouter } from "next/router";
+import { Button, ChatInputField, InputField, Navbar } from "@/components/";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import style from "./style.module.css";
 import { API_URL } from "@/env";
@@ -48,7 +48,11 @@ export default function Support() {
   return (
     <main>
       <Navbar></Navbar>
-      <div className="w-screen h-96 bg-red-100 p-10 flex flex-col gap-5 overflow-auto">
+      <div className="pr-56 pl-56 pt-8">
+        <h4 className="flex justify-center items-center m-8 font-bold">Chat Support</h4>
+        <hr className="border-t my-4 w-full" />
+      <div className="bg-white border border-gray-200 rounded-lg shadow-md">
+      <div className="h-96 bg-red-100 p-10 flex flex-col gap-5">
         {messages.map((e: any) => {
           return (
             <div
@@ -64,8 +68,8 @@ export default function Support() {
           );
         })}
       </div>
-      <div className="flex items-center w-full">
-        <InputField onChange={handleChange}></InputField>
+      <div className="flex items-center justify-between p-5">
+        <ChatInputField onChange={handleChange}></ChatInputField>
         <Button
           onClick={() => {
             handleSubmit();
@@ -74,6 +78,10 @@ export default function Support() {
           Send
         </Button>
       </div>
+      </div>
+      </div>
+   
+     
     </main>
   );
 }

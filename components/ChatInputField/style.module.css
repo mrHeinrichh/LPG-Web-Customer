@@ -1,0 +1,13 @@
+.input {
+  border-radius: 0.375rem; /* Equivalent to rounded-md in Tailwind CSS */
+  padding: 0.75rem 1.25rem; /* Equivalent to px-5 py-3 in Tailwind CSS */
+  width: 600px; /* Equivalent to w-96 in Tailwind CSS */
+  border-width: 0.125rem; /* Equivalent to border-2 in Tailwind CSS */
+  border-style: solid;
+  border-color: #d1d5db; /* Equivalent to border-gray-300 in Tailwind CSS */
+  outline: none; /* Remove default focus outline */
+}
+
+.input:focus {
+  border-color: #3b82f6; /* Equivalent to focus:border-blue-500 in Tailwind CSS */
+}

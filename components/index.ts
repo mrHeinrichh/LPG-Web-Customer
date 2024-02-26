@@ -10,6 +10,7 @@ import Datatable from "./Datatable";
 import TableRow from "./TableRow";
 import CartDeleteButton from "./CartDeleteButton";
 import ChangePasswordButton from "./ChangePasswordButton";
+import ChatInputField from "./ChatInputField";
 
 
 export {
@@ -25,4 +26,5 @@ export {
   Button,
   CartDeleteButton,
   ChangePasswordButton,
+  ChatInputField,
 };
