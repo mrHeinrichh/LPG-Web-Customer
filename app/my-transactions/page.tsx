@@ -7,9 +7,11 @@ import {
   useCheckoutStore,
   useTransactionsStore,
 } from "@/states";
+import { parseToFiat } from "@/utils";
 import { useQRCode } from "next-qrcode";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";export default function Home() {
+import { useEffect, useState } from "react";
+export default function Home() {
   const { Canvas } = useQRCode();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -67,7 +69,9 @@ import { useEffect, useState } from "react";export default function Home() {
                 style={{ backgroundColor: "#ffffff" }}
               >
                 <div className="flex flex-col gap-3">
-                  <p className="text-2xl font-bold">{`Order #${index + 1}`}</p>
+                  <p className="text-2xl font-bold">{`Order #${
+                    transactions.length - index
+                  }`}</p>
                   <Canvas
                     text={e._id ?? ""}
                     options={{
@@ -79,11 +83,11 @@ import { useEffect, useState } from "react";export default function Home() {
                   />
                 </div>
                 <div className="flex flex-col gap-3">
-                  <p className="text-2xl">
-                    Transaction Number: {e._id}
-                  </p>
+                  <p className="text-2xl">Transaction Number: {e._id}</p>
                   <p className="text-2xl">Order Status: {e.status}</p>
-                  <p className="text-2xl">Total Price: ₱{e.total}.00</p>
+                  <p className="text-2xl">
+                    Total Price: {parseToFiat(e.total)}
+                  </p>
                 </div>
               </div>
               {index < transactions.length - 1 && (
