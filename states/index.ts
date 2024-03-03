@@ -1,7 +1,9 @@
-import { get, patch, post } from "@/config";
-import { API_URL } from "@/env";
+import { get, post } from "@/config";
 import { create } from "zustand";
 
+import useAnnouncementStore from "./announcements";
+
+export { useAnnouncementStore };
 export const useDashboardStore = create((set) => ({
   prices: [],
   getPricesByDate: async (start: string, end: string, item: string) => {
@@ -83,16 +85,6 @@ export const useMessagesStore = create((set) => ({
     return set((state: any) => ({
       messages: [...state.messages, data],
     }));
-  },
-}));
-
-export const useAnnouncementsStore = create((set) => ({
-  announcements: [],
-  getAnnouncements: async () => {
-    const { data } = await get(`announcements`);
-    if (data.status == "success") {
-      return set(() => ({ announcements: data.data }));
-    }
   },
 }));
 
