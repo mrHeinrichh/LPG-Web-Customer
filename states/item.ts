@@ -13,8 +13,17 @@ export interface IItemStore {
   setTimeFilter: (timeFilter: TimeFilter) => void;
   units: number;
   setUnits: (value: number) => void;
-  getPrices: ({}: IQuery) => Promise<void>;
   prices: IPriceModel<string>[];
+  getPrices: ({}: IQuery) => Promise<void>;
+  reasons: IPriceModel<IItemModel>[];
+  page: number;
+  limit: number;
+  search: string;
+  setSearch: (value: string) => void;
+  incrementPage: () => void;
+  decrementPage: () => void;
+  setLimit: (value: number) => void;
+  getReasons: ({}: IQuery) => Promise<void>;
 }
 
 const itemInitialState: IItemModel = {
@@ -88,4 +97,52 @@ export default create<IItemStore>((set) => ({
       }));
     }
   },
+  reasons: [],
+  page: 1,
+  limit: 10,
+  search: "",
+  getReasons: async ({ page = 1, limit = 10, filter = "{}" }: IQuery) => {
+    const { data, status } = await getPrices<IItemModel>({
+      page,
+      limit,
+      filter,
+      populate: "item",
+    });
+    if (status == "success") {
+      return set(() => ({
+        reasons: data,
+      }));
+    }
+  },
+  setSearch: (value: string) => {
+    return set(() => ({
+      search: value,
+    }));
+  },
+  incrementPage: () => {
+    return set((state) => ({
+      page: state.page + 1,
+    }));
+  },
+  decrementPage: () => {
+    return set((state) => {
+      if (state.page > 1) {
+        return {
+          page: state.page - 1,
+        };
+      }
+      return {
+        ...state,
+      };
+    });
+  },
+  setLimit: (value: number) => {
+    return set(() => ({
+      limit: value,
+    }));
+  },
 }));
+// search: string;
+// setSearch: (value: string) => void;
+// incrementPage: () => void;
+// decrementPage: () => void;

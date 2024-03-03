@@ -3,14 +3,43 @@ import { Navbar } from "@/components";
 import { useItemStore } from "@/states";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import { getMutiplier } from "@/utils";
+import { getMutiplier, getSearchFilterQuery } from "@/utils";
 import { ForecastChart, ItemDetails, ReasonsTable } from "./components";
+import { SEARCH_FILTERS } from "./components/ReasonsTable/data";
 
 export default function Item() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 
-  const { getItemById, getPrices, timeFilter, units } = useItemStore();
+  const {
+    getItemById,
+    getPrices,
+    timeFilter,
+    units,
+    getReasons,
+    page,
+    limit,
+    search,
+  } = useItemStore();
+
+  useEffect(() => {
+    if (search != "") {
+      getReasons({
+        page,
+        limit,
+        filter: `{ "$and": [{"reason": {"$ne": null}}, {"item": "${id}"},${getSearchFilterQuery(
+          SEARCH_FILTERS,
+          search
+        )}]}`,
+      });
+    } else {
+      getReasons({
+        page,
+        limit,
+        filter: `{ "$and": [{"reason": {"$ne": null}}, {"item": "${id}"}]}`,
+      });
+    }
+  }, [getReasons, page, limit, search, id]);
 
   useEffect(() => {
     const startDate = new Date();
@@ -32,7 +61,7 @@ export default function Item() {
       <Navbar />
       <ItemDetails />
       <ForecastChart />
-      {/* <ReasonsTable /> */}
+      <ReasonsTable />
     </main>
   );
 }

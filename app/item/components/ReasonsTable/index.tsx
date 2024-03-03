@@ -1,60 +1,67 @@
 import { SelectField, InputField, Datatable, TableRow } from "@/components";
 import React, { useEffect, useState } from "react";
 import { SEARCH_FILTERS, TABLE_HEADERS } from "./data";
-import { usePriceStore } from "@/states";
-import { getSearchFilterQuery } from "@/utils";
+import { useItemStore } from "@/states";
+import { getSearchFilterQuery, parseToFiat } from "@/utils";
 import { useSearchParams } from "next/navigation";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { IItemModel, IPriceModel } from "@/models";
 
 function ReasonsTable() {
   const searchParams = useSearchParams();
-  const { getReasons, reasons } = usePriceStore() as any;
+  const {
+    setLimit,
+    incrementPage,
+    decrementPage,
+    getReasons,
+    reasons,
+    page,
+    limit,
+    search,
+    setSearch,
+  } = useItemStore();
   const id = searchParams.get("id");
-  const [search, setsearch] = useState("");
-  const [page, setpage] = useState(1);
-  const [limit, setlimit] = useState(20);
 
   useEffect(() => {
     if (search != "") {
-      getReasons(
+      getReasons({
         page,
         limit,
-        `{ "$and": [{"reason": {"$ne": null}}, {"item": "${id}"},${getSearchFilterQuery(
+        filter: `{ "$and": [{"reason": {"$ne": null}}, {"item": "${id}"},${getSearchFilterQuery(
           SEARCH_FILTERS,
           search
-        )}]}`
-      );
+        )}]}`,
+      });
     } else {
-      getReasons(
+      getReasons({
         page,
         limit,
-        `{ "$and": [{"reason": {"$ne": null}}, {"item": "${id}"}]}`
-      );
+        filter: `{ "$and": [{"reason": {"$ne": null}}, {"item": "${id}"}]}`,
+      });
     }
   }, [page, limit, search, id]);
 
   return (
-    <>
+    <div className="px-20">
       <div className="flex justify-between items-center w-full mt-5 mb-2 bg-white-100 rounded-md px-4 py-2">
         <div className="">
           <InputField
             name="search"
             onChange={(event: any) => {
               const { value } = event.target;
-              setsearch(value);
+              setSearch(value);
             }}
           />
         </div>
       </div>
 
       <Datatable header={TABLE_HEADERS}>
-        {reasons.map((e: any) => (
+        {reasons.map((e: IPriceModel<IItemModel>) => (
           <TableRow key={e._id}>
             <td>{e.item.name}</td>
-            <td>{e.price}</td>
-            <td>{e.type}</td>
+            <td>{parseToFiat(e.price)}</td>
             <td>{e.reason}</td>
-            <td>{e.createdAt}</td>
+            <td>{e.createdAt.toString()}</td>
           </TableRow>
         ))}
       </Datatable>
@@ -70,25 +77,25 @@ function ReasonsTable() {
             name={""}
             title={""}
             onChange={(e: any) => {
-              setlimit(e.target.value);
+              setLimit(Number(e.target.value));
             }}
           />
         </div>
         <div className="flex items-center gap-4 ">
           <FaChevronLeft
             onClick={() => {
-              setpage((prev: number) => prev - 1);
+              decrementPage();
             }}
           />
           {page}
           <FaChevronRight
             onClick={() => {
-              setpage((prev: number) => prev + 1);
+              incrementPage();
             }}
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
