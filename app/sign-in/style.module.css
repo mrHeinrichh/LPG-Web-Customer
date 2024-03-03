@@ -1,60 +1,12 @@
 .container {
   height: 90vh;
-  @apply flex justify-center items-center;
-  
-}
-
-.form {
-  @apply p-5 grid grid-cols-2 gap-4;
-}
-
-.pageContainer {
-  display: flex;
-}
-
-.cardContainer {
-  display: flex;
-  justify-content: flex-start; /* Align card to the left */
-  align-items: center;
-  height: 100vh; /* Use the full height of the viewport */
-  width: 50%; /* Take up half of the available width */
-}
-
-
-
-.signupText {
-  font-size: 14px; /* Adjust the font size as needed */
-  padding-top: 10px;
-  
-}
-
-.signupText a {
-  color: #1f2937; /* Set the color to the desired value */
-  /* You can add additional styles for the link if needed */
-  font-weight: bold;
- 
-}
-
-.tagLine {
-  color: #1f2937; /* Set the color to the desired value */
-  /* You can add additional styles for the link if needed */
-  font-weight: bold;
-  font-size: 11px; /* Adjust the font size as needed */
-justify-content: center;
-text-align: center;
-
-  align-items: center;
-  padding-top: 10px;
-  padding-bottom: 10px;
 }
 
 .pageBackground {
-  
-  background-image: url('https://raw.githubusercontent.com/mrHeinrichh/J.E-Moral-cdn/main/assets/lpg-header.png');
+  background-image: url("https://raw.githubusercontent.com/mrHeinrichh/J.E-Moral-cdn/main/assets/lpg-header.png");
   background-size: 90%;
-  
   background-repeat: no-repeat;
   background-position: right;
-  height: 100vh;
-  width: 50%; /* Take up the other half of the available width */
+  height: 100%;
+  width: 50%;
 }

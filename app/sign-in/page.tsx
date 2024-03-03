@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import style from "./style.module.css";
 import { useAuthStore } from "@/states";
+
 export default function Home() {
   const router = useRouter();
   const { user, authenticate } = useAuthStore() as any;
@@ -21,84 +22,57 @@ export default function Home() {
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
 
-  const handleSubmit = async () => {
-    authenticate({ ...formData });
-  };
-
   const handleSignUpClick = () => {
-    router.push('/sign-up'); // Replace '/signup' with the actual path of your sign-up page
+    router.push("/sign-up");
   };
 
   return (
-    <main className={style.pageContainer}>
-      <Navbar></Navbar>
-      <div className={style.cardContainer}>
-        <div className={`${style.container} ${style.card}`}>
-          <div className={style.cardContainer}>
-            <div className={style.container}>
-              <div className={style.formContainer}>
-                <form onSubmit={handleSubmit} className={style.form}>
-                  <div className="col-span-2">
-                    <div className="flex justify-center items-center">
-                      <h3 className="font-bold text-lg">SIGN IN</h3>
-
-                    </div>
-                    
-                  </div>
-
-                  <div className="col-span-2">
-                  <p className={style.tagLine}>
-   &ldquo;Fueling Convenience, Order Your LPG Tanks with Ease!&rdquo;
-</p>
-
-                  </div>
-                  <div className="col-span-2">
-                    <InputField
-                      type="email"
-                      name="email"
-                      placeholder="Email"
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="col-span-2">
-                    <InputField
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                      onChange={handleChange}
-                    />
-                  </div>
-                 
-                 
-                  <div className="col-span-2">
-                    <div className="flex justify-center items-center">
-                      <Button
-                        type="button"
-                        onClick={() => {
-                          authenticate({ ...formData });
-                        }}
-                      >
-                        Sign in
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="col-span-2">
-                  <p className={style.signupText}>
-   Don&apos;t have an account?{' '}
-   <a href="#" onClick={handleSignUpClick}>
-      Sign up here!
-   </a>
-</p>
-
-                    
-                  </div>
-                </form>
+    <main>
+      <Navbar />
+      <div className={style.container}>
+        <div className="flex h-full w-full">
+          <div className="w-1/2 flex justify-center items-center ">
+            <div className="max-w-xl flex flex-col gap-5">
+              <div className="flex flex-col gap-2">
+                <h3 className="font-bold text-lg text-center">SIGN IN</h3>
+                <p className="text-center font-bold text-sm">
+                  &ldquo;Fueling Convenience, Order Your LPG Tanks with
+                  Ease!&rdquo;
+                </p>
               </div>
+
+              <InputField
+                type="email"
+                name="email"
+                placeholder="Email"
+                onChange={handleChange}
+              />
+              <InputField
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={handleChange}
+              />
+
+              <Button
+                type="button"
+                onClick={() => {
+                  authenticate({ ...formData });
+                }}
+              >
+                Sign in
+              </Button>
+              <p>
+                Don&apos;t have an account?{" "}
+                <span onClick={handleSignUpClick} className="font-bold">
+                  Sign up here!
+                </span>
+              </p>
             </div>
           </div>
+          <div className={style.pageBackground}></div>;
         </div>
       </div>
-      <div className={style.pageBackground}></div>
     </main>
   );
 }
