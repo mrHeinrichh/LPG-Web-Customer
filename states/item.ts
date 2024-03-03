@@ -1,5 +1,6 @@
-import { IItemModel } from "@/models";
-import { getItemById } from "@/repositories";
+import { TimeFilter } from "@/interfaces";
+import { IItemModel, IPriceModel } from "@/models";
+import { IQuery, getItemById, getPrices } from "@/repositories";
 import { create } from "zustand";
 
 export interface IItemStore {
@@ -8,7 +9,14 @@ export interface IItemStore {
   quantity: number;
   increment: (limit: number) => void;
   decrement: () => void;
+  timeFilter: TimeFilter;
+  setTimeFilter: (timeFilter: TimeFilter) => void;
+  units: number;
+  setUnits: (value: number) => void;
+  getPrices: ({}: IQuery) => Promise<void>;
+  prices: IPriceModel<string>[];
 }
+
 const itemInitialState: IItemModel = {
   name: "",
   category: "",
@@ -25,6 +33,8 @@ const itemInitialState: IItemModel = {
 };
 
 export default create<IItemStore>((set) => ({
+  timeFilter: "Daily",
+  units: 10,
   item: itemInitialState,
   quantity: 1,
   getItemById: async (_id: string) => {
@@ -58,5 +68,24 @@ export default create<IItemStore>((set) => ({
         ...prev,
       };
     });
+  },
+  setTimeFilter: (timeFilter: TimeFilter) => {
+    return set(() => ({
+      timeFilter,
+    }));
+  },
+  setUnits: (units: number) => {
+    return set(() => ({
+      units,
+    }));
+  },
+  prices: [],
+  getPrices: async ({ page = 1, limit = 10, filter = "{}" }: IQuery) => {
+    const { data, status } = await getPrices<string>({ page, limit, filter });
+    if (status == "success") {
+      return set(() => ({
+        prices: data,
+      }));
+    }
   },
 }));

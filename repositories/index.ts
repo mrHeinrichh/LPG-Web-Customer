@@ -1,5 +1,5 @@
 import { get, remove } from "@/config";
-import { IAnnouncementModel, IItemModel } from "@/models";
+import { IAnnouncementModel, IItemModel, IPriceModel } from "@/models";
 
 export type ResponseStatus = "success" | "failed";
 
@@ -13,6 +13,8 @@ export interface IHttpResponseMeta {
 export interface IQuery {
   page?: number;
   limit?: number;
+  filter?: string;
+  populate?: string;
 }
 export interface IHttpResponse<T> {
   data: T[];
@@ -33,4 +35,17 @@ export async function getItems({ page = 1, limit = 10 }: IQuery) {
 
 export async function getItemById(_id: string) {
   return (await get(`items/${_id}`)).data as IHttpResponse<IItemModel>;
+}
+
+export async function getPrices<T>({
+  page = 1,
+  limit = 10,
+  filter = "{}",
+  populate = "",
+}: IQuery) {
+  return (
+    await get(
+      `prices?page=${page}&limit=${limit}&filter=${filter}&populate=${populate}`
+    )
+  ).data as IHttpResponse<IPriceModel<T>>;
 }

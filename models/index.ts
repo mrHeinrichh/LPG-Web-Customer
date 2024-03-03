@@ -23,3 +23,10 @@ export interface IItemModel extends IModel {
   image: string;
   type: "Product" | "Accessory" | "";
 }
+
+export interface IPriceModel<T> extends IModel {
+  item: T;
+  price: number;
+  reason?: string;
+  type: "Customer" | "Retailer";
+}
