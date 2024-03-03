@@ -3,8 +3,8 @@ import { create } from "zustand";
 
 import useAnnouncementStore from "./announcements";
 import useHomeStore from "./home";
-
-export { useAnnouncementStore, useHomeStore };
+import useItemStore from "./item";
+export { useItemStore, useAnnouncementStore, useHomeStore };
 export const useDashboardStore = create((set) => ({
   prices: [],
   getPricesByDate: async (start: string, end: string, item: string) => {
@@ -89,20 +89,20 @@ export const useMessagesStore = create((set) => ({
   },
 }));
 
-export const useItemStore = create((set) => ({
-  items: [],
-  getItems: async () => {
-    const { data } = await get(`items`);
-    if (data.status == "success") {
-      return set(() => ({ items: data.data }));
-    }
-  },
-  removeItem: (id: any) => {
-    set((state: any) => ({
-      items: [...state.items.filter((e: any) => e._id != id)],
-    }));
-  },
-}));
+// export const useItemStore = create((set) => ({
+//   items: [],
+//   getItems: async () => {
+//     const { data } = await get(`items`);
+//     if (data.status == "success") {
+//       return set(() => ({ items: data.data }));
+//     }
+//   },
+//   removeItem: (id: any) => {
+//     set((state: any) => ({
+//       items: [...state.items.filter((e: any) => e._id != id)],
+//     }));
+//   },
+// }));
 
 export const useCartStore = create((set) => ({
   cart: [],

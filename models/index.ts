@@ -14,12 +14,12 @@ export interface IAnnouncementModel extends IModel {
 
 export interface IItemModel extends IModel {
   name: string;
-  category: "Brand New Tanks" | "Refill Tanks" | "Accessories";
+  category: "Brand New Tanks" | "Refill Tanks" | "Accessories" | "";
   description: string;
-  weight: Number;
-  stock: Number;
-  customerPrice: Number;
-  retailerPrice: Number;
+  weight: number;
+  stock: number;
+  customerPrice: number;
+  retailerPrice: number;
   image: string;
-  type: "Product" | "Accessory";
+  type: "Product" | "Accessory" | "";
 }

@@ -1,2 +1,3 @@
 import ReasonsTable from "./ReasonsTable";
-export { ReasonsTable };
+import ItemDetails from "./ItemDetails";
+export { ItemDetails, ReasonsTable };
