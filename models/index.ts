@@ -11,3 +11,15 @@ export interface IAnnouncementModel extends IModel {
   end: Date | string;
   text?: string;
 }
+
+export interface IItemModel extends IModel {
+  name: string;
+  category: "Brand New Tanks" | "Refill Tanks" | "Accessories";
+  description: string;
+  weight: Number;
+  stock: Number;
+  customerPrice: Number;
+  retailerPrice: Number;
+  image: string;
+  type: "Product" | "Accessory";
+}

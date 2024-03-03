@@ -1,5 +1,5 @@
 import { get, remove } from "@/config";
-import { IAnnouncementModel } from "@/models";
+import { IAnnouncementModel, IItemModel } from "@/models";
 
 export type ResponseStatus = "success" | "failed";
 
@@ -24,4 +24,9 @@ export interface IHttpResponse<T> {
 export async function getAnnouncements({ page = 1, limit = 10 }: IQuery) {
   return (await get(`announcements?page=${page}&limit=${limit}`))
     .data as IHttpResponse<IAnnouncementModel>;
+}
+
+export async function getItems({ page = 1, limit = 10 }: IQuery) {
+  return (await get(`items?page=${page}&limit=${limit}`))
+    .data as IHttpResponse<IItemModel>;
 }

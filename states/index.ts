@@ -2,8 +2,9 @@ import { get, post } from "@/config";
 import { create } from "zustand";
 
 import useAnnouncementStore from "./announcements";
+import useHomeStore from "./home";
 
-export { useAnnouncementStore };
+export { useAnnouncementStore, useHomeStore };
 export const useDashboardStore = create((set) => ({
   prices: [],
   getPricesByDate: async (start: string, end: string, item: string) => {
