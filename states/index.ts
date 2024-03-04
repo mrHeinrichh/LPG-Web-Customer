@@ -4,20 +4,8 @@ import { create } from "zustand";
 import useAnnouncementStore from "./announcements";
 import useHomeStore from "./home";
 import useItemStore from "./item";
-export { useItemStore, useAnnouncementStore, useHomeStore };
-export const useDashboardStore = create((set) => ({
-  prices: [],
-  getPricesByDate: async (start: string, end: string, item: string) => {
-    const { data } = await get(
-      `dashboard/prices?start=${start}&end=${end}&item=${item}`
-    );
-    if (data.status == "success") {
-      return set(() => ({
-        prices: data.data,
-      }));
-    }
-  },
-}));
+import useCartStore from "./cart";
+export { useCartStore, useItemStore, useAnnouncementStore, useHomeStore };
 
 export const useCheckoutStore = create((set) => ({
   checkoutItems: [],
@@ -103,46 +91,6 @@ export const useMessagesStore = create((set) => ({
 //     }));
 //   },
 // }));
-
-export const useCartStore = create((set) => ({
-  cart: [],
-  addToCart: (item: any) => {
-    return set((state: any) => {
-      const temp = state.cart.find((e: any) => e._id == item._id);
-      if (temp) {
-        return {
-          cart: [
-            ...state.cart.map((e: any) => {
-              if (e._id == item._id) e.quantity += item.quantity;
-              return e;
-            }),
-          ],
-        };
-      }
-
-      return {
-        cart: [...state.cart, item],
-      };
-    });
-  },
-  deleteItems: (items: any[]) => {
-    return set((state: any) => {
-      const temp = state.cart.filter(
-        (e: any) => !items.find((item: any) => item._id == e._id)
-      );
-      return {
-        cart: [...temp],
-      };
-    });
-  },
-  resetItems: () => {
-    return set(() => {
-      return {
-        cart: [],
-      };
-    });
-  },
-}));
 
 export const useGeoApifyStore = create((set) => ({
   locations: [],

@@ -12,6 +12,10 @@ export interface IAnnouncementModel extends IModel {
   text?: string;
 }
 
+export interface ICartItemModel extends IItemModel {
+  quantity: number;
+}
+
 export interface IItemModel extends IModel {
   name: string;
   category: "Brand New Tanks" | "Refill Tanks" | "Accessories" | "";

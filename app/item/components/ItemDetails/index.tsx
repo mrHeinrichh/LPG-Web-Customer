@@ -4,12 +4,15 @@ import React from "react";
 import { parseToFiat } from "@/utils";
 import { CiCircleMinus, CiCirclePlus } from "react-icons/ci";
 import Image from "next/image";
-import { useItemStore } from "@/states";
+import { useCartStore, useItemStore } from "@/states";
+import { useRouter } from "next/navigation";
 
 export interface IItemDetailsProps {}
 
 function ItemDetails({}: IItemDetailsProps) {
+  const router = useRouter();
   const { item, quantity, increment, decrement } = useItemStore();
+  const { addToCart } = useCartStore();
 
   return (
     <div className="h-fit flex justify-center items-center p-20 pt-10">
@@ -42,7 +45,14 @@ function ItemDetails({}: IItemDetailsProps) {
                 />
               </div>
             </div>
-            <Button onClick={() => {}}> Add to Cart</Button>
+            <Button
+              onClick={() => {
+                addToCart(item, quantity);
+                router.push("/my-cart");
+              }}
+            >
+              Add to Cart
+            </Button>
           </div>
         </div>
       </div>
