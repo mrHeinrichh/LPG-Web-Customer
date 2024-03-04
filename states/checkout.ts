@@ -1,4 +1,8 @@
-import { autoComplete, createTransaction, uploadImage } from "@/repositories";
+import {
+  transactionRepository,
+  uploadRepository,
+  geoApifyRepository,
+} from "@/repositories";
 import { create } from "zustand";
 
 export interface ICheckoutStore {
@@ -27,7 +31,7 @@ export default create<ICheckoutStore>((set) => ({
   focused: false,
   autocomplete: async (search: string) => {
     if (search != "") {
-      const { data, status } = await autoComplete(search);
+      const { data, status } = await geoApifyRepository.autoComplete(search);
       if (status == "success") {
         return set(() => ({
           locations: data[0].features,
@@ -53,7 +57,7 @@ export default create<ICheckoutStore>((set) => ({
   },
   discountIdImage: null,
   uploadImage: async (value: FormData) => {
-    const { data, status } = await uploadImage(value);
+    const { data, status } = await uploadRepository.image(value);
     return set((state) => {
       if (status == "success") {
         return {
@@ -66,7 +70,7 @@ export default create<ICheckoutStore>((set) => ({
   success: false,
   // TODO: Add types
   createTransaction: async (value: any) => {
-    const { status } = await createTransaction(value);
+    const { status } = await transactionRepository.create(value);
     return set((state) => {
       if (status == "success") {
         return { success: true };

@@ -1,6 +1,6 @@
-import { TimeFilter } from "@/interfaces";
+import { IQuery, TimeFilter } from "@/interfaces";
 import { IItemModel, IPriceModel } from "@/models";
-import { IQuery, getItemById, getPrices } from "@/repositories";
+import { priceRepository, itemRepository } from "@/repositories";
 import { create } from "zustand";
 
 export interface IItemStore {
@@ -47,7 +47,7 @@ export default create<IItemStore>((set) => ({
   item: itemInitialState,
   quantity: 1,
   getItemById: async (_id: string) => {
-    const { data, status } = await getItemById(_id);
+    const { data, status } = await itemRepository.getItemById(_id);
     if (status == "success" && data.length !== 0) {
       return set(() => ({
         item: data[0],
@@ -90,7 +90,11 @@ export default create<IItemStore>((set) => ({
   },
   prices: [],
   getPrices: async ({ page = 1, limit = 10, filter = "{}" }: IQuery) => {
-    const { data, status } = await getPrices<string>({ page, limit, filter });
+    const { data, status } = await priceRepository.getPrices<string>({
+      page,
+      limit,
+      filter,
+    });
     if (status == "success") {
       return set(() => ({
         prices: data,
@@ -102,7 +106,7 @@ export default create<IItemStore>((set) => ({
   limit: 10,
   search: "",
   getReasons: async ({ page = 1, limit = 10, filter = "{}" }: IQuery) => {
-    const { data, status } = await getPrices<IItemModel>({
+    const { data, status } = await priceRepository.getPrices<IItemModel>({
       page,
       limit,
       filter,

@@ -1,5 +1,6 @@
+import { IQuery } from "@/interfaces";
 import { IAnnouncementModel } from "@/models";
-import { IQuery, getAnnouncements } from "@/repositories";
+import { announcementRepository } from "@/repositories";
 import { create } from "zustand";
 
 export interface IAnnouncementStore {
@@ -16,7 +17,10 @@ export default create<IAnnouncementStore>((set) => ({
   page: 1,
   limit: 1,
   getAnnouncements: async ({ page = 1, limit = 10 }) => {
-    const { data, status } = await getAnnouncements({ page, limit });
+    const { data, status } = await announcementRepository.getAnnouncements({
+      page,
+      limit,
+    });
     if (status == "success") {
       return set(() => ({ announcements: data }));
     }

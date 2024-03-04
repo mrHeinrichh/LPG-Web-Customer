@@ -1,5 +1,6 @@
+import { IQuery } from "@/interfaces";
 import { IItemModel } from "@/models";
-import { IQuery, getItems } from "@/repositories";
+import { itemRepository } from "@/repositories";
 import { create } from "zustand";
 
 export interface SetNavbarVisibleArgs {
@@ -26,7 +27,7 @@ export default create<IHomeStore>((set) => ({
   refillTanks: [],
   accessories: [],
   getItems: async ({ page = 1, limit = 10 }) => {
-    const { data, status } = await getItems({ page, limit });
+    const { data, status } = await itemRepository.getItems({ page, limit });
     if (status == "success") {
       return set(() => ({
         items: data,

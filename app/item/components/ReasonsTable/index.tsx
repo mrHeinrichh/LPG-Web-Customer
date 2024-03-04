@@ -39,7 +39,7 @@ function ReasonsTable() {
         filter: `{ "$and": [{"reason": {"$ne": null}}, {"item": "${id}"}]}`,
       });
     }
-  }, [page, limit, search, id]);
+  }, [page, limit, search, id, getReasons]);
 
   return (
     <div className="px-20">

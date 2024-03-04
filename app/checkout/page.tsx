@@ -58,7 +58,7 @@ export default function Checkout() {
       deleteItems(selected.map((item) => item._id ?? ""));
       router.push("/");
     }
-  }, [success, selected, deleteItems, reset]);
+  }, [success, selected, deleteItems, reset, router]);
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
