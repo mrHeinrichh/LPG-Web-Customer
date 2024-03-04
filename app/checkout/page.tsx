@@ -1,17 +1,31 @@
 "use client";
 import { Button, InputField, Navbar } from "@/components";
-import { post } from "@/config";
-import { useAuthStore, useCartStore, useGeoApifyStore } from "@/states";
+import { ICartItemModel } from "@/models";
+import { useAuthStore, useCartStore, useCheckoutStore } from "@/states";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Checkout() {
   const router = useRouter();
-  const { autocomplete, locations } = useGeoApifyStore() as any;
-  const { cart, resetItems } = useCartStore() as any;
+  const {
+    autocomplete,
+    locations,
+    search,
+    setSearch,
+    setLocation,
+    location,
+    focused,
+    setFocused,
+    discountIdImage,
+    uploadImage,
+    createTransaction,
+    success,
+    reset,
+  } = useCheckoutStore();
+
+  const { selected, deleteItems } = useCartStore();
   const { user } = useAuthStore() as any;
-  const [showResults, setShowResults] = useState(true);
   const [formData, setFormData] = useState({
     contactNumber: "",
     name: "",
@@ -19,19 +33,14 @@ export default function Checkout() {
     barangay: "",
     paymentMethod: "",
   });
-  const [search, setsearch] = useState<any>();
-  const [location, setlocation] = useState<any>();
-  const [discountIdImage, setdiscountIdImage] = useState<null | string>(null);
+
   const [assembly, setassembly] = useState<boolean>(false);
   const [showDiscountImage, setShowDiscountImage] = useState(false); // Add this line
 
   const fileChange = async (event: any) => {
     const form = new FormData();
     form.append("image", event.target.files[0]);
-    const { data } = await post<FormData>("upload/image", form);
-    if (data.status == "success") {
-      setdiscountIdImage(data.data[0]?.path ?? "");
-    }
+    uploadImage(form);
   };
 
   const handleChange = (event: any) => {
@@ -43,15 +52,30 @@ export default function Checkout() {
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
 
-  const createTransaction = async () => {
-    const { data } = await post("transactions", {
+  useEffect(() => {
+    if (success) {
+      reset();
+      deleteItems(selected.map((item) => item._id ?? ""));
+      router.push("/");
+    }
+  }, [success, selected, deleteItems, reset]);
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      autocomplete(search);
+    }, 500);
+    return () => clearTimeout(delayDebounceFn);
+  }, [search, autocomplete]);
+
+  const handleSubmit = () => {
+    createTransaction({
       ...formData,
       assembly,
       deliveryLocation: location.properties.formatted,
       long: location.properties.lon,
       lat: location.properties.lat,
       to: user._id ?? "",
-      items: cart,
+      items: selected,
       statuses: [
         {
           createdAt: new Date(),
@@ -62,24 +86,8 @@ export default function Checkout() {
       type: "Delivery",
       priceType: "Customer",
     });
-
-    if (data.status == "success") {
-      resetItems();
-      router.push("/");
-    }
   };
 
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      autocomplete(search);
-    }, 1000);
-    return () => clearTimeout(delayDebounceFn);
-  }, [search, autocomplete]);
-  const handleResultClick = (result: any) => {
-    setsearch(result.properties.formatted);
-    setlocation(result);
-    setShowResults(false);
-  };
   return (
     <main className="">
       <Navbar />
@@ -94,17 +102,23 @@ export default function Checkout() {
               type="text"
               value={search}
               onChange={(e: any) => {
-                setsearch(e.target.value);
-                setShowResults(true); // Show results when typing
+                setSearch(e.target.value);
+              }}
+              onFocus={() => {
+                setFocused(true);
               }}
               className="w-full py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             />
-            {showResults && locations.length > 0 && (
+            {focused && locations.length > 0 && (
               <div className="absolute top-full left-0 bg-white border border-gray-300 w-full mt-1 rounded-md shadow-md">
                 {locations.map((result: any) => (
                   <p
                     key={result.properties.formatted}
-                    onClick={() => handleResultClick(result)}
+                    onClick={() => {
+                      setSearch(result.properties.formatted);
+                      setLocation(result);
+                      setFocused(false);
+                    }}
                     className="cursor-pointer py-2 px-4 hover:bg-gray-100"
                   >
                     {result.properties.formatted}
@@ -197,21 +211,20 @@ export default function Checkout() {
               </div>
             )}
           </div>
-          {/* {cart.map((e: any) => (
-        <div key={e._id}>
-          <p>Name: {e.name}</p>
-          <p>Quantity: {e.quantity}</p>
-          <Image src={e.image} width={250} height={250} alt={e.image}></Image>
-        </div>
-      ))} */}
+          {selected.map((e: ICartItemModel) => (
+            <div key={e._id}>
+              <p>Name: {e.name}</p>
+              <p>Quantity: {e.quantity}</p>
+              <Image
+                src={e.image}
+                width={250}
+                height={250}
+                alt={e.image}
+              ></Image>
+            </div>
+          ))}
           <div className="flex flex-col gap-3 justify-center items-center mx-auto p-10">
-            <Button
-              onClick={() => {
-                createTransaction();
-              }}
-            >
-              Order Now
-            </Button>
+            <Button onClick={handleSubmit}>Order Now</Button>
           </div>
         </div>
       </div>

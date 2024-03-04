@@ -34,3 +34,49 @@ export interface IPriceModel<T> extends IModel {
   reason?: string;
   type: "Customer" | "Retailer";
 }
+
+export interface ITransactionModel extends IModel {
+  name: string;
+  contactNumber: string;
+  total: number;
+  items: ICartItemModel[];
+  discounted: boolean;
+  completed: boolean;
+  discountIdImage: string | null;
+}
+
+export type DevliveryStatus =
+  | "Pending"
+  | "Approved"
+  | "Declined"
+  | "Completed"
+  | "On Going"
+  | "Cancelled"
+  | "Archived"
+  | "Completed";
+
+export interface IDeliveryModel<T, K> extends ITransactionModel {
+  deliveryLocation: string;
+  houseLotBlk: string;
+  paymentMethod: "COD" | "GCASH";
+  status: DevliveryStatus;
+  assembly: boolean;
+  deliveryDate: Date | string;
+  barangay: string;
+  total: number;
+  to: T;
+  rider: K;
+  // TODO: Add types
+  feedback: any[];
+  // TODO: Add types
+  statuses: any[];
+  rating: number;
+  pickupImages: string;
+  completionImages: string;
+  cancellationImages: string;
+  cancelReason?: string;
+  pickedUp: boolean;
+  hasFeedback: boolean;
+  long?: number;
+  lat?: number;
+}

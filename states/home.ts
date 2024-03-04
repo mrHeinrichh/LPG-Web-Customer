@@ -1,5 +1,5 @@
-import { IAnnouncementModel, IItemModel } from "@/models";
-import { IQuery, getAnnouncements, getItems } from "@/repositories";
+import { IItemModel } from "@/models";
+import { IQuery, getItems } from "@/repositories";
 import { create } from "zustand";
 
 export interface SetNavbarVisibleArgs {

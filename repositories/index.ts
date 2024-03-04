@@ -1,5 +1,10 @@
-import { get, remove } from "@/config";
-import { IAnnouncementModel, IItemModel, IPriceModel } from "@/models";
+import { get, post, remove } from "@/config";
+import {
+  IAnnouncementModel,
+  IDeliveryModel,
+  IItemModel,
+  IPriceModel,
+} from "@/models";
 
 export type ResponseStatus = "success" | "failed";
 
@@ -48,4 +53,21 @@ export async function getPrices<T>({
       `prices?page=${page}&limit=${limit}&filter=${filter}&populate=${populate}`
     )
   ).data as IHttpResponse<IPriceModel<T>>;
+}
+
+export async function autoComplete(search: string) {
+  return (await get(`geoapify/autocomplete?search=${search}`))
+    .data as IHttpResponse<any>;
+}
+
+export async function uploadImage(body: FormData) {
+  return (await post<FormData>("upload/image", body))
+    .data as IHttpResponse<any>;
+}
+
+// TODO: add types to args
+export async function createTransaction(body: any) {
+  return (await post("transactions", body)).data as IHttpResponse<
+    IDeliveryModel<string, string>
+  >;
 }
