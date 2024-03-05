@@ -1,10 +1,10 @@
 import { IDeliveryModel } from "@/models";
-import { useTransactionsStore } from "@/states";
+import { useTransactionStore } from "@/states";
 import React from "react";
 import TransactionCard from "../TransactionCard";
 
 function TransactionsList() {
-  const { transactions } = useTransactionsStore() as any;
+  const { transactions } = useTransactionStore() as any;
 
   return (
     <div className="flex flex-col gap-2 p-5">

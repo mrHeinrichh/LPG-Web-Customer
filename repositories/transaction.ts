@@ -1,6 +1,13 @@
-import { post } from "@/config";
+import { get, post } from "@/config";
 import { IHttpResponse } from "@/interfaces";
 import { IDeliveryModel } from "@/models";
+
+// TODO: add types to args
+export async function getTransactions(query: string) {
+  return (await get(`transactions/?${query}`)).data as IHttpResponse<
+    IDeliveryModel<string, string>
+  >;
+}
 
 // TODO: add types to args
 export async function create(body: any) {
@@ -9,4 +16,4 @@ export async function create(body: any) {
   >;
 }
 
-export default { create };
+export default { getTransactions, create };

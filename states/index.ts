@@ -8,7 +8,10 @@ import useCartStore from "./cart";
 import useCheckoutStore from "./checkout";
 import useAuthStore from "./auth";
 import useFaqStore from "./faq";
+import useTransactionStore from "./transaction";
+
 export {
+  useTransactionStore,
   useFaqStore,
   useAuthStore,
   useCheckoutStore,
@@ -40,19 +43,5 @@ export const useMessagesStore = create((set) => ({
     return set((state: any) => ({
       messages: [...state.messages, data],
     }));
-  },
-}));
-
-export const useGeoApifyStore = create((set) => ({}));
-
-export const useTransactionsStore = create((set) => ({
-  transactions: [],
-  getTransactions: async (query: string) => {
-    const { data } = await get(`transactions/?${query}`);
-    if (data.status == "success") {
-      return set(() => ({
-        transactions: data.data,
-      }));
-    }
   },
 }));
