@@ -9,8 +9,9 @@ export interface IAnnouncementStoreStates {
   limit: number;
 }
 
+// TODO: Add types
 export interface IAnnouncementStoreActions {
-  announcements: IAnnouncementModel[];
-  page: number;
-  limit: number;
+  getAnnouncements: ({}: any) => Promise<void>;
+  next: () => void;
+  back: () => void;
 }

@@ -66,7 +66,7 @@ function TransactionCard({ delivery, orderNumber }: ITransactionCardProps) {
 
         <div className="flex flex-col gap-3">
           {delivery.statuses.map((e: any) => (
-            <p>
+            <p key={e.createdAt}>
               {e.message}{" "}
               <span className="font-light text-gray-500">({e.createdAt})</span>
             </p>
@@ -78,7 +78,10 @@ function TransactionCard({ delivery, orderNumber }: ITransactionCardProps) {
         <div className="flex flex-col gap-2">
           {delivery.items.map((item: ICartItemModel) => {
             return (
-              <div className="flex justify-between items-center gap-3">
+              <div
+                className="flex justify-between items-center gap-3"
+                key={item._id}
+              >
                 <div className="flex gap-4 items-center">
                   <Image
                     src={item.image ?? ""}
