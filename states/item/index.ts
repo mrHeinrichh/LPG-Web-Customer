@@ -1,51 +1,12 @@
-import { IQuery, TimeFilter } from "@/interfaces";
-import { IItemModel, IPriceModel } from "@/models";
-import { priceRepository, itemRepository } from "@/repositories";
 import { create } from "zustand";
+import { initialState } from "./initialState";
+import { itemRepository, priceRepository } from "@/repositories";
+import { ItemStore } from "./types";
+import { IQuery, TimeFilter } from "@/interfaces";
+import { IItemModel } from "@/models";
 
-export interface IItemStore {
-  getItemById: (_id: string) => Promise<void>;
-  item: IItemModel;
-  quantity: number;
-  increment: (limit: number) => void;
-  decrement: () => void;
-  timeFilter: TimeFilter;
-  setTimeFilter: (timeFilter: TimeFilter) => void;
-  units: number;
-  setUnits: (value: number) => void;
-  prices: IPriceModel<string>[];
-  getPrices: ({}: IQuery) => Promise<void>;
-  reasons: IPriceModel<IItemModel>[];
-  page: number;
-  limit: number;
-  search: string;
-  setSearch: (value: string) => void;
-  incrementPage: () => void;
-  decrementPage: () => void;
-  setLimit: (value: number) => void;
-  getReasons: ({}: IQuery) => Promise<void>;
-}
-
-const itemInitialState: IItemModel = {
-  name: "",
-  category: "",
-  description: "",
-  weight: 0,
-  stock: 0,
-  customerPrice: 0,
-  retailerPrice: 0,
-  image: "",
-  type: "",
-  deleted: false,
-  createdAt: new Date(),
-  updatedAt: new Date(),
-};
-
-export default create<IItemStore>((set) => ({
-  timeFilter: "Daily",
-  units: 10,
-  item: itemInitialState,
-  quantity: 1,
+export default create<ItemStore>((set) => ({
+  ...initialState,
   getItemById: async (_id: string) => {
     const { data, status } = await itemRepository.getItemById(_id);
     if (status == "success" && data.length !== 0) {
@@ -88,7 +49,7 @@ export default create<IItemStore>((set) => ({
       units,
     }));
   },
-  prices: [],
+
   getPrices: async ({ page = 1, limit = 10, filter = "{}" }: IQuery) => {
     const { data, status } = await priceRepository.getPrices<string>({
       page,
@@ -101,10 +62,7 @@ export default create<IItemStore>((set) => ({
       }));
     }
   },
-  reasons: [],
-  page: 1,
-  limit: 10,
-  search: "",
+
   getReasons: async ({ page = 1, limit = 10, filter = "{}" }: IQuery) => {
     const { data, status } = await priceRepository.getPrices<IItemModel>({
       page,
@@ -146,7 +104,3 @@ export default create<IItemStore>((set) => ({
     }));
   },
 }));
-// search: string;
-// setSearch: (value: string) => void;
-// incrementPage: () => void;
-// decrementPage: () => void;

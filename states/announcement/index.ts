@@ -1,21 +1,10 @@
-import { IQuery } from "@/interfaces";
-import { IAnnouncementModel } from "@/models";
 import { announcementRepository } from "@/repositories";
 import { create } from "zustand";
+import { AnnouncementStore } from "./types";
+import { initialState } from "./initialState";
 
-export interface IAnnouncementStore {
-  announcements: IAnnouncementModel[];
-  getAnnouncements: ({}: IQuery) => Promise<void>;
-  page: number;
-  limit: number;
-  next: () => void;
-  back: () => void;
-}
-
-export default create<IAnnouncementStore>((set) => ({
-  announcements: [],
-  page: 1,
-  limit: 1,
+export default create<AnnouncementStore>((set) => ({
+  ...initialState,
   getAnnouncements: async ({ page = 1, limit = 10 }) => {
     const { data, status } = await announcementRepository.getAnnouncements({
       page,

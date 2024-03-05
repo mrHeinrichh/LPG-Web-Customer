@@ -1,14 +1,14 @@
 "use client";
 import { Navbar } from "@/components/";
+import { useFaqStore } from "@/states";
 import { useEffect } from "react";
-import { useFaqsStore } from "@/states";
 
 export default function Faqs() {
-  const { faqs, getFaqs } = useFaqsStore() as any;
+  const { faqs, getFaqs } = useFaqStore();
 
   useEffect(() => {
     getFaqs();
-  }, [getFaqs]);  // Add getFaqs to the dependency array
+  }, [getFaqs]); // Add getFaqs to the dependency array
 
   return (
     <main>

@@ -1,21 +1,10 @@
 import { ICartItemModel, IItemModel } from "@/models";
 import { create } from "zustand";
-
-export interface ICartStore {
-  items: ICartItemModel[];
-  selected: ICartItemModel[];
-  total: number;
-  addToCart: (item: IItemModel, quantity: number) => void;
-  deleteItems: (itemIds: string[]) => void;
-  resetItems: () => void;
-  addToSelected: (item: ICartItemModel) => void;
-  removeFromSelected: (itemId: string) => void;
-}
+import { ICartStore } from "./types";
+import { initialState } from "./initialState";
 
 export default create<ICartStore>((set) => ({
-  items: [],
-  selected: [],
-  total: 0,
+  ...initialState,
   addToCart: (item: IItemModel, quantity: number) => {
     return set((state) => {
       const temp = state.items.find((e: any) => e._id == item._id);

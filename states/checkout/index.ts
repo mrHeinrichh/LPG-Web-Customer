@@ -1,34 +1,14 @@
+import { create } from "zustand";
+import { initialState } from "./initialState";
 import {
+  geoApifyRepository,
   transactionRepository,
   uploadRepository,
-  geoApifyRepository,
 } from "@/repositories";
-import { create } from "zustand";
-
-export interface ICheckoutStore {
-  // TODO: Add types
-  locations: any[];
-  autocomplete: (search: string) => Promise<void>;
-  search: string;
-  setSearch: (value: string) => void;
-  // TODO: Add types
-  location: any;
-  // TODO: Add types
-  setLocation: (value: any) => void;
-  focused: boolean;
-  setFocused: (value: boolean) => void;
-  discountIdImage: null | string;
-  uploadImage: (value: FormData) => Promise<void>;
-  // TODO: Add types to args
-  createTransaction: (value: any) => Promise<void>;
-  success: boolean;
-  reset: () => void;
-}
+import { ICheckoutStore } from "./types";
 
 export default create<ICheckoutStore>((set) => ({
-  locations: [],
-  location: {},
-  focused: false,
+  ...initialState,
   autocomplete: async (search: string) => {
     if (search != "") {
       const { data, status } = await geoApifyRepository.autoComplete(search);
@@ -39,7 +19,6 @@ export default create<ICheckoutStore>((set) => ({
       }
     }
   },
-  search: "",
   setSearch: (value: string) => {
     return set(() => ({
       search: value,
@@ -55,7 +34,6 @@ export default create<ICheckoutStore>((set) => ({
       focused: value,
     }));
   },
-  discountIdImage: null,
   uploadImage: async (value: FormData) => {
     const { data, status } = await uploadRepository.image(value);
     return set((state) => {
@@ -67,7 +45,6 @@ export default create<ICheckoutStore>((set) => ({
       return { ...state };
     });
   },
-  success: false,
   // TODO: Add types
   createTransaction: async (value: any) => {
     const { status } = await transactionRepository.create(value);
@@ -79,7 +56,7 @@ export default create<ICheckoutStore>((set) => ({
     });
   },
   reset: () => {
-    return set((state) => {
+    return set(() => {
       return { success: false };
     });
   },

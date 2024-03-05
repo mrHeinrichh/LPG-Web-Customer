@@ -1,49 +1,22 @@
 import { get, post } from "@/config";
 import { create } from "zustand";
 
-import useAnnouncementStore from "./announcements";
+import useAnnouncementStore from "./announcement";
 import useHomeStore from "./home";
 import useItemStore from "./item";
 import useCartStore from "./cart";
 import useCheckoutStore from "./checkout";
+import useAuthStore from "./auth";
+import useFaqStore from "./faq";
 export {
+  useFaqStore,
+  useAuthStore,
   useCheckoutStore,
   useCartStore,
   useItemStore,
   useAnnouncementStore,
   useHomeStore,
 };
-
-export const useAuthStore = create((set) => ({
-  user: null,
-  access: null,
-  refresh: null,
-  authenticate: async (request: any) => {
-    const { data } = await post(`users/authenticate`, {
-      ...request,
-      type: "Customer",
-    });
-    if (data.status == "success") {
-      return set(() => ({ user: data.data[0] }));
-    }
-  },
-  setUser: (user: any) => {
-    return set(() => ({ user: user }));
-  },
-  logout: () => {
-    return set(() => ({ user: null }));
-  },
-}));
-
-export const useFaqsStore = create((set) => ({
-  faqs: [],
-  getFaqs: async () => {
-    const { data } = await get(`faqs`);
-    if (data.status == "success") {
-      return set(() => ({ faqs: data.data }));
-    }
-  },
-}));
 
 export const useMessagesStore = create((set) => ({
   messages: [],
