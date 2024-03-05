@@ -6,7 +6,10 @@ import uploadRepository from "./upload";
 import transactionRepository from "./transaction";
 import userRepository from "./user";
 import faqRepository from "./faq";
+import messageRepository from "./message";
+
 export {
+  messageRepository,
   faqRepository,
   userRepository,
   uploadRepository,

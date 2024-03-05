@@ -6,13 +6,13 @@ import style from "./style.module.css";
 import { API_URL } from "@/env";
 import Image from "next/image";
 import { SOCKET, patch, post } from "@/config";
-import { useAuthStore, useMessagesStore } from "@/states";
+import { useAuthStore, useMessageStore } from "@/states";
 
 export default function Support() {
   const router = useRouter();
   const { user, authenticate } = useAuthStore() as any;
   const { getMessages, messages, addMessage, addNewMessage } =
-    useMessagesStore() as any;
+    useMessageStore() as any;
   const [image, setimage] = useState<null | string>(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -49,39 +49,39 @@ export default function Support() {
     <main>
       <Navbar></Navbar>
       <div className="pr-56 pl-56 pt-8">
-        <h4 className="flex justify-center items-center m-8 font-bold">Chat Support</h4>
+        <h4 className="flex justify-center items-center m-8 font-bold">
+          Chat Support
+        </h4>
         <hr className="border-t my-4 w-full" />
-      <div className="bg-white border border-gray-200 rounded-lg shadow-md">
-      <div className="h-96 bg-red-100 p-10 flex flex-col gap-5">
-        {messages.map((e: any) => {
-          return (
-            <div
-              key={e._id}
-              className={`flex items-center ${
-                e.from == user._id ? "justify-end" : "justify-start"
-              }`}
+        <div className="bg-white border border-gray-200 rounded-lg shadow-md">
+          <div className="h-96 bg-red-100 p-10 flex flex-col gap-5">
+            {messages.map((e: any) => {
+              return (
+                <div
+                  key={e._id}
+                  className={`flex items-center ${
+                    e.from == user._id ? "justify-end" : "justify-start"
+                  }`}
+                >
+                  <p className="p-2 bg-white-500 w-fit text-xl rounded-lg">
+                    {e.content}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+          <div className="flex items-center justify-between p-5">
+            <ChatInputField onChange={handleChange}></ChatInputField>
+            <Button
+              onClick={() => {
+                handleSubmit();
+              }}
             >
-              <p className="p-2 bg-white-500 w-fit text-xl rounded-lg">
-                {e.content}
-              </p>
-            </div>
-          );
-        })}
+              Send
+            </Button>
+          </div>
+        </div>
       </div>
-      <div className="flex items-center justify-between p-5">
-        <ChatInputField onChange={handleChange}></ChatInputField>
-        <Button
-          onClick={() => {
-            handleSubmit();
-          }}
-        >
-          Send
-        </Button>
-      </div>
-      </div>
-      </div>
-   
-     
     </main>
   );
 }
