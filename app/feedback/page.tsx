@@ -98,61 +98,56 @@ export default function Feedback() {
   return (
     <main>
       <Navbar />
-      <div className="">
-        <h4 className="flex justify-center items-center m-5 font-bold">
-          Feedback
-        </h4>
-        <div className="flex flex-col gap-3 bg-white rounded-lg shadow-xl pr-24 pl-24 pt-10">
-          {transaction && transaction.status === "Completed" && (
-            <>
-              <p className="text-3xl font-bold">Help us improve!</p>
-              <InputField
-                name="q1"
-                placeholder="How satisfied are you with the speed and responsiveness of our mobile/web application when browsing and making purchases?"
-                onChange={handleChange}
-              />
-              <StarRating onClick={setq1Rate} rating={q1rating} />
+      <div className="flex flex-col gap-3 bg-white rounded-lg shadow-xl pr-24 pl-24 pt-10">
+        {transaction && transaction.status === "Completed" && (
+          <>
+            <p className="text-3xl font-bold">Help us improve!</p>
+            <InputField
+              name="q1"
+              placeholder="How satisfied are you with the speed and responsiveness of our mobile/web application when browsing and making purchases?"
+              onChange={handleChange}
+            />
+            <StarRating onClick={setq1Rate} rating={q1rating} />
 
-              <InputField
-                name="q2"
-                placeholder="How satisfied are you with the approval and speed of your transaction in the system?"
-                onChange={handleChange}
-              />
-              <StarRating onClick={setq2Rate} rating={q2rating} />
+            <InputField
+              name="q2"
+              placeholder="How satisfied are you with the approval and speed of your transaction in the system?"
+              onChange={handleChange}
+            />
+            <StarRating onClick={setq2Rate} rating={q2rating} />
 
-              <InputField
-                name="q3"
-                placeholder="How satisfied are you with the communication skills and punctuality of the delivery rider in delivering your LPG order?"
-                onChange={handleChange}
-              />
-              <StarRating onClick={setq3Rate} rating={q3rating} />
+            <InputField
+              name="q3"
+              placeholder="How satisfied are you with the communication skills and punctuality of the delivery rider in delivering your LPG order?"
+              onChange={handleChange}
+            />
+            <StarRating onClick={setq3Rate} rating={q3rating} />
 
-              <InputField
-                name="q4"
-                placeholder="On a scale of 1 to 5, how would you describe your overall experience using our mobile/web application to purchase LPG products?"
-                onChange={handleChange}
-              />
-              <StarRating onClick={setq4Rate} rating={q4rating} />
+            <InputField
+              name="q4"
+              placeholder="On a scale of 1 to 5, how would you describe your overall experience using our mobile/web application to purchase LPG products?"
+              onChange={handleChange}
+            />
+            <StarRating onClick={setq4Rate} rating={q4rating} />
 
-              <InputField
-                name="q5"
-                placeholder="Overall, how likely are you to recommend our mobile/web application to others based on your experience using it for LPG purchases?"
-                onChange={handleChange}
-              />
-              <StarRating onClick={setq5Rate} rating={q5rating} />
+            <InputField
+              name="q5"
+              placeholder="Overall, how likely are you to recommend our mobile/web application to others based on your experience using it for LPG purchases?"
+              onChange={handleChange}
+            />
+            <StarRating onClick={setq5Rate} rating={q5rating} />
 
-              <div className="flex justify-center items-center p-10">
-                <Button
-                  onClick={() => {
-                    createFeedback();
-                  }}
-                >
-                  Submit Feedback
-                </Button>
-              </div>
-            </>
-          )}
-        </div>
+            <div className="flex justify-center items-center p-10">
+              <Button
+                onClick={() => {
+                  createFeedback();
+                }}
+              >
+                Submit Feedback
+              </Button>
+            </div>
+          </>
+        )}
       </div>
     </main>
   );

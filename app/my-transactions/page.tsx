@@ -15,8 +15,7 @@ export default function MyTransactions() {
   return (
     <main>
       <Navbar />
-      <div className="p-10">
-        <h4 className="font-bold">My Transaction History</h4>
+      <div className="p-5">
         <TransactionsList />
       </div>
     </main>
