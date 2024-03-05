@@ -5,6 +5,8 @@ import { useQRCode } from "next-qrcode";
 import React, { useState } from "react";
 import { FaPlus, FaCheck, FaMinus, FaXmark } from "react-icons/fa6";
 import Image from "next/image";
+import { Button } from "@/components";
+import { useRouter } from "next/navigation";
 export interface ITransactionCardProps {
   delivery: IDeliveryModel<string, string>;
   orderNumber: number;
@@ -12,14 +14,27 @@ export interface ITransactionCardProps {
 
 function TransactionCard({ delivery, orderNumber }: ITransactionCardProps) {
   const { Canvas } = useQRCode();
-
+  const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
 
   return (
     <div className="flex flex-col gap-3 w-full p-5 shadow-xl rounded-lg">
       <div className="flex items-center justify-between w-full">
         <p className="text-2xl font-bold">{`Order #${orderNumber}`}</p>
-        <p className="text-xl font-light">{delivery.status}</p>
+        <div className="flex items-center gap-5">
+          <p className="text-xl font-light">{delivery.status}</p>
+          {delivery.status == "Completed" && delivery.feedback.length == 0 ? (
+            <Button
+              onClick={() => {
+                router.push(`/feedback?id=${delivery._id}`);
+              }}
+            >
+              Add Feedback
+            </Button>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
       <div className="flex gap-10">
         <div className="flex gap-3 items-center">
