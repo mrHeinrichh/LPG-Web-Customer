@@ -16,9 +16,9 @@ function HeroSection({}: IHeroSection) {
         </h1>
         <p>We deliver safe and fast to your doorstep!</p>
       </div>
-      <div className="ml-auto pr-49">
+      <div className="ml-auto pr-32">
         <Image
-          src="https://raw.githubusercontent.com/mrHeinrichh/J.E-Moral-cdn/main/assets/lpg-header.png"
+          src="https://raw.githubusercontent.com/mrHeinrichh/J.E-Moral-cdn/main/assets/png/logo-main.png"
           alt="Image Description"
           width={600}
           height={600}

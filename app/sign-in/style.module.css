@@ -3,10 +3,11 @@
 }
 
 .pageBackground {
-  background-image: url("https://raw.githubusercontent.com/mrHeinrichh/J.E-Moral-cdn/main/assets/lpg-header.png");
-  background-size: 90%;
+  background-image: url("https://raw.githubusercontent.com/mrHeinrichh/J.E-Moral-cdn/main/assets/png/logo-main.png");
+  background-size: 70%;
+  margin-right: 90px;
   background-repeat: no-repeat;
-  background-position: right;
+  background-position: center;
   height: 100%;
   width: 50%;
 }
