@@ -1,0 +1,8 @@
+.container {
+  height: 90vh;
+  @apply flex justify-center items-center;
+}
+
+.form {
+  @apply p-5 grid grid-cols-2 gap-4;
+}

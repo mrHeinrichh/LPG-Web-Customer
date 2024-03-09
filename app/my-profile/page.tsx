@@ -104,6 +104,7 @@ export default function MyProfile() {
     <main>
       <Navbar />
       
+     
       <div className="col-span-2 flex justify-center">
         <form className={style.form}>
           <div className="col-span-3">
@@ -171,35 +172,12 @@ export default function MyProfile() {
               Change Password
             </ChangePasswordButton>
           </div>
-        
-       
-
           <div className="flex justify-center col-span-2">
             <UpdateProfileButton type="button" onClick={handleSubmit}>
               Update Profile
             </UpdateProfileButton>
             
-          </div>
-
-          <div className="">
-            <p className="font-bold text-lg">Rider Appointment</p>
-          </div>
-          <div className="col-span-2">
-            <InputField
-              type="date"
-              name="date"
-              placeholder="Appointment Date"
-              onChange={handleChangeDate}
-            />
-          </div>
-          <div className="col-span-2">
-            <Button type="button" onClick={handleAppointmentSubmit}>
-              Apply as a rider
-            </Button>
-          </div>
-         
-           
-         
+          </div>   
         </form>
       </div>
     </main>

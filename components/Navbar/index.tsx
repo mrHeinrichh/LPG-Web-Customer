@@ -49,6 +49,12 @@ import { FaRegMessage } from "react-icons/fa6";function Navbar() {
               </p>
               <p
                 className={style.navItem}
+                onClick={() => router.push("/appointment")}
+              >
+                RIDER APPLY {/* Updated to use HTML entity */}
+              </p>
+              <p
+                className={style.navItem}
                 onClick={() => logout()}
               >
                 Logout
