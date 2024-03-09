@@ -16,13 +16,60 @@ function TransactionCard({ delivery, orderNumber }: ITransactionCardProps) {
   const { Canvas } = useQRCode();
   const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
+  const validStatuses = ["Pending", "Approved", "On Going", "Cancelled", "Completed", "Declined"];
+const showTransaction = validStatuses.includes(delivery.status);
 
+  const handleCancelOrder = async () => {
+    try {
+      const response = await fetch(`https://lpg-api-06n8.onrender.com/api/v1/transactions/${delivery._id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          status: "Archived",
+          __t: "Delivery",
+        }),
+      });
+
+      if (response.ok) {
+        // Optionally handle success
+        console.log("Order canceled successfully!");
+      } else {
+        // Handle error
+        console.error("Failed to cancel order");
+      }
+    } catch (error) {
+      // Handle network error
+      console.error("Network error:", error);
+    }
+  };
+
+  if (!showTransaction) {
+    return null;
+  }
   return (
     <div className="flex flex-col gap-3 w-full p-5 shadow-xl rounded-lg">
       <div className="flex items-center justify-between w-full">
         <p className="text-2xl font-bold">{`Order #${orderNumber}`}</p>
         <div className="flex items-center gap-5">
-          <p className="text-xl font-light">{delivery.status}</p>
+          <p className="text-xl font-light">{delivery.status}</p>\
+          {delivery.status === "Pending" ? (
+            <button
+              className={`text-xl font-light underline-text`}
+              onClick={() => {
+                // Add your logic for handling the click event when the status is "Pending"
+                if (delivery.status === "Pending") {
+                  handleCancelOrder();
+                }
+              }}
+            >
+              Cancel Order
+            </button>
+          ) : (
+            ""
+          )}
+        
           {delivery.status == "Completed" && delivery.feedback.length == 0 ? (
             <Button
               onClick={() => {
