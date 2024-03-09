@@ -181,7 +181,22 @@ export default function MyProfile() {
             
           </div>
 
-      
+          <div className="">
+            <p className="font-bold text-lg">Rider Appointment</p>
+          </div>
+          <div className="col-span-2">
+            <InputField
+              type="date"
+              name="date"
+              placeholder="Appointment Date"
+              onChange={handleChangeDate}
+            />
+          </div>
+          <div className="col-span-2">
+            <Button type="button" onClick={handleAppointmentSubmit}>
+              Apply as a rider
+            </Button>
+          </div>
          
            
          
