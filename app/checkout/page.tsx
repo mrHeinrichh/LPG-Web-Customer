@@ -65,13 +65,15 @@ export default function Checkout() {
   };
 
   const handleChange = (event: any) => {
-    const { name, value, checked } = event.target;
-    if (name === "assembly") {
+    const { name, value, checked, type } = event.target;
+  
+    if (type === "checkbox") {
       setassembly(checked);
-      return;
+    } else {
+      setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
     }
-    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
+  
 
   useEffect(() => {
     if (success) {
@@ -183,11 +185,11 @@ export default function Checkout() {
         
           <div className="flex gap-2 justify-center items-center p-4">
           <InputField
-  type="datetime-local"  // Change this line
-  name="deliveryDateTime"
+  type="datetime-local"
+  name="deliveryDate"
   placeholder="Delivery Date and Time"
-              onChange={handleChange}
-              value={formData.deliveryDate}
+  onChange={handleChange}
+  value={formData.deliveryDate}
 />
           </div>
           <div className="flex flex-col gap-3 justify-center items-center mx-auto p-10">

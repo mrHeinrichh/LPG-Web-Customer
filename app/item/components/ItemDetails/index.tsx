@@ -49,7 +49,7 @@ function ItemDetails({}: IItemDetailsProps) {
               </div>
             </div>
 
-            {isWithinWorkingHours ? (
+            {/* {isWithinWorkingHours ? ( */}
               <Button
                 onClick={() => {
                   addToCart(item, quantity);
@@ -58,9 +58,9 @@ function ItemDetails({}: IItemDetailsProps) {
               >
                 Add to Cart
               </Button>
-            ) : (
-              <p className="text-red-500">Adding items is only available between 7am and 7pm.</p>
-            )}
+            {/* // ) : (
+            //   <p className="text-red-500">Ordering is only available between 7am and 7pm.</p>
+            // )} */}
           </div>
         </div>
       </div>
