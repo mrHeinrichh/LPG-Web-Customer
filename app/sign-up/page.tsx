@@ -44,7 +44,7 @@ export default function Home() {
       const { data } = await post(`users`, {
         ...formData,
         image,
-        type: "Customer",
+        __t: "Customer",
       });
 
       console.log(data);
