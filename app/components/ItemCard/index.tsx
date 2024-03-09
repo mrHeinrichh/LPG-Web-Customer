@@ -11,12 +11,12 @@ export interface IItemCard {
 function ItemCard({ item, onClick }: IItemCard) {
   return (
     <div className={style.container} onClick={onClick}>
-      <div className="relative w-full min-h-40 h-64">
-        <Image src={item.image} fill alt={item.image}></Image>
+      <div className="relative h-64 w-64">
+        <Image src={item.image} fill alt={item.image}className="rounded-t-lg"></Image>
       </div>
 
-      <p className="text-3xl font-bold">{item.name}</p>
-      <p className="text-2xl">₱{item.customerPrice.toString()}</p>
+      <p className="text-1xl pl-4 pt-4 font-bold">{item.name}</p>
+      <p className="xl pl-4 pb-4">₱{item.customerPrice.toString()}</p>
     </div>
   );
 }

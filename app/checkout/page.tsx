@@ -83,7 +83,7 @@ export default function Checkout() {
         },
       ],
       discountIdImage: discountIdImage ? discountIdImage : null,
-      type: "Delivery",
+      __t: "Delivery",
       priceType: "Customer",
     });
   };

@@ -1,3 +1,21 @@
 .container {
   @apply w-full;
 }
+
+.button {
+  background-color: black;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px; /* Adjust the radius as needed */
+}
+
+/* Additional styles for specific corners if needed */
+.button.rounded-l {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.button.rounded-r {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
