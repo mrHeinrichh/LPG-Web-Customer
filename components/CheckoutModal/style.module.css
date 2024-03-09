@@ -1,0 +1,8 @@
+.small-modal {
+  width: 300px;
+  margin: auto;
+}
+
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+}

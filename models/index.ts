@@ -44,6 +44,14 @@ export interface ITransactionModel extends IModel {
   completed: boolean;
   discountIdImage: string | null;
 }
+export interface ITransactionFormData {
+  contactNumber: string;
+  name: string;
+  houseLotBlk: string;
+  barangay: string;
+  deliveryDate: string;
+}
+
 
 export type DevliveryStatus =
   | "Pending"

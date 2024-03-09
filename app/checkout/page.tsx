@@ -5,8 +5,27 @@ import { useAuthStore, useCartStore, useCheckoutStore } from "@/states";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import OrderConfirmationModal from "../../components/CheckoutModal/index";
 
 export default function Checkout() {
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+
+  const handleConfirmationModalOpen = () => {
+    setIsConfirmationModalOpen(true);
+  };
+
+  const handleConfirmationModalClose = () => {
+    setIsConfirmationModalOpen(false);
+  };
+
+  const handleConfirmationModalConfirm = () => {
+    // Implement logic to handle the confirmation (e.g., call your API)
+    // You can call the handleSubmit function here if needed
+    handleSubmit();
+    // Close the modal
+    handleConfirmationModalClose();
+  };
+
   const router = useRouter();
   const {
     autocomplete,
@@ -32,6 +51,8 @@ export default function Checkout() {
     houseLotBlk: "",
     barangay: "",
     paymentMethod: "",
+    deliveryDate: "",
+
   });
 
   const [assembly, setassembly] = useState<boolean>(false);
@@ -45,7 +66,7 @@ export default function Checkout() {
 
   const handleChange = (event: any) => {
     const { name, value, checked } = event.target;
-    if (name == "assembly") {
+    if (name === "assembly") {
       setassembly(checked);
       return;
     }
@@ -109,35 +130,38 @@ export default function Checkout() {
               }}
               className="w-full py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             />
-            {focused && locations.length > 0 && (
-              <div className="absolute top-full left-0 bg-white border border-gray-300 w-full mt-1 rounded-md shadow-md">
-                {locations.map((result: any) => (
-                  <p
-                    key={result.properties.formatted}
-                    onClick={() => {
-                      setSearch(result.properties.formatted);
-                      setLocation(result);
-                      setFocused(false);
-                    }}
-                    className="cursor-pointer py-2 px-4 hover:bg-gray-100"
-                  >
-                    {result.properties.formatted}
-                  </p>
-                ))}
-              </div>
-            )}
+         {focused && locations.length > 0 && (
+  <div className="absolute top-full left-0 border border-gray-300 w-full mt-1 rounded-md shadow-md" style={{ backgroundColor: 'white' }}>
+    {locations.map((result: any) => (
+      <p
+        key={result.properties.formatted}
+        onClick={() => {
+          setSearch(result.properties.formatted);
+          setLocation(result);
+          setFocused(false);
+        }}
+        className="cursor-pointer py-2 px-4 bg-white hover:bg-gray-100"
+      >
+        {result.properties.formatted}
+      </p>
+    ))}
+  </div>
+)}
+
           </div>
           <div className="flex gap-2 justify-center items-center">
             <InputField
               name="name"
               placeholder="Full Name"
               onChange={handleChange}
+              value={formData.name}
             />
-
             <InputField
               name="contactNumber"
-              placeholder="Contact Number"
+              placeholder="Mobile Number"
               onChange={handleChange}
+              value={formData.contactNumber}
+              
             />
           </div>
 
@@ -146,14 +170,26 @@ export default function Checkout() {
               name="houseLotBlk"
               placeholder="House | Lot | Blk."
               onChange={handleChange}
+              value={formData.houseLotBlk}
             />
             <InputField
               name="barangay"
-              placeholder="Baranggay"
+              placeholder="Barangay"
               onChange={handleChange}
+              value={formData.barangay}
             />
+            
           </div>
-
+        
+          <div className="flex gap-2 justify-center items-center p-4">
+          <InputField
+  type="datetime-local"  // Change this line
+  name="deliveryDateTime"
+  placeholder="Delivery Date and Time"
+              onChange={handleChange}
+              value={formData.deliveryDate}
+/>
+          </div>
           <div className="flex flex-col gap-3 justify-center items-center mx-auto p-10">
             <p className="text-xl font-bold">Choose Payment Method</p>
             <div className="flex items-center gap-3">
@@ -163,6 +199,8 @@ export default function Checkout() {
                 value="COD"
                 placeholder="Cash on Delivery"
                 onChange={handleChange}
+
+                
               />
               <InputField
                 type="radio"
@@ -211,20 +249,16 @@ export default function Checkout() {
               </div>
             )}
           </div>
-          {selected.map((e: ICartItemModel) => (
-            <div key={e._id}>
-              <p>Name: {e.name}</p>
-              <p>Quantity: {e.quantity}</p>
-              <Image
-                src={e.image}
-                width={250}
-                height={250}
-                alt={e.image}
-              ></Image>
-            </div>
-          ))}
+       <OrderConfirmationModal
+  isOpen={isConfirmationModalOpen}
+  onClose={handleConfirmationModalClose}
+  onConfirm={handleConfirmationModalConfirm}
+  formData={formData}
+  selectedItems={selected}
+/>
+
           <div className="flex flex-col gap-3 justify-center items-center mx-auto p-10">
-            <Button onClick={handleSubmit}>Order Now</Button>
+          <Button onClick={handleConfirmationModalOpen}>Review Order</Button>
           </div>
         </div>
       </div>

@@ -14,12 +14,15 @@ function ItemDetails({}: IItemDetailsProps) {
   const { item, quantity, increment, decrement } = useItemStore();
   const { addToCart } = useCartStore();
 
+  const currentHour = new Date().getHours();
+  const isWithinWorkingHours = currentHour >= 7 && currentHour < 19; // 7am to 7pm
+
   return (
     <div className="h-fit flex justify-center items-center p-20 pt-10">
       <div className="bg-white border border-gray-200 rounded-lg shadow-md p-20 w-full">
         <div className="flex gap-20">
-          <div className="w-96 h-96 relative">
-            <Image src={item.image} fill alt={item.image} />
+          <div className="w-96 h-96 relative rounded-md overflow-hidden">
+            <Image src={item.image} fill alt={item.image} className="w-full h-full object-cover" />
           </div>
 
           <div className="flex flex-col justify-evenly w-2/3">
@@ -45,14 +48,19 @@ function ItemDetails({}: IItemDetailsProps) {
                 />
               </div>
             </div>
-            <Button
-              onClick={() => {
-                addToCart(item, quantity);
-                router.push("/my-cart");
-              }}
-            >
-              Add to Cart
-            </Button>
+
+            {isWithinWorkingHours ? (
+              <Button
+                onClick={() => {
+                  addToCart(item, quantity);
+                  router.push("/my-cart");
+                }}
+              >
+                Add to Cart
+              </Button>
+            ) : (
+              <p className="text-red-500">Adding items is only available between 7am and 7pm.</p>
+            )}
           </div>
         </div>
       </div>
