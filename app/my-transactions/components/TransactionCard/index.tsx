@@ -5,7 +5,6 @@ import { useQRCode } from "next-qrcode";
 import React, { useState } from "react";
 import { FaPlus, FaCheck, FaMinus, FaXmark } from "react-icons/fa6";
 import Image from "next/image";
-import { Button } from "@/components";
 import { useRouter } from "next/navigation";
 export interface ITransactionCardProps {
   delivery: IDeliveryModel<string, string>;
@@ -70,14 +69,19 @@ const showTransaction = validStatuses.includes(delivery.status);
             ""
           )}
         
-          {delivery.status == "Completed" && delivery.feedback.length == 0 ? (
-            <Button
+          {delivery.status == "Completed" ? (
+            <button
+            className={`text-xl font-light underline-text`}
               onClick={() => {
-                router.push(`/feedback?id=${delivery._id}`);
+
+                if (delivery.status === "Completed") {
+                   router.push(`/feedback?id=${delivery._id}`);
+                }
+              
               }}
             >
               Add Feedback
-            </Button>
+            </button>
           ) : (
             ""
           )}
