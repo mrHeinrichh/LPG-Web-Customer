@@ -28,6 +28,7 @@ const showTransaction = validStatuses.includes(delivery.status);
         body: JSON.stringify({
           status: "Archived",
           __t: "Delivery",
+          deleted: true,
         }),
       });
 
