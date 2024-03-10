@@ -14,6 +14,10 @@ import {
 import { FaRegMessage } from "react-icons/fa6";function Navbar() {
   const router = useRouter();
   const { user, logout } = useAuthStore() as any;
+  const handleRedirect = () => {
+    const linkToRedirect = "https://mrheinrichh.github.io/web-mobile-download-interface/";
+    window.location.href = linkToRedirect; // Redirect using the browser's location.href
+  };
 
   return (
     <>
@@ -29,6 +33,7 @@ import { FaRegMessage } from "react-icons/fa6";function Navbar() {
               >
                 HOME
               </p>
+
               <p
                 className={style.navItem}
                 onClick={() => router.push("/announcements")}
@@ -53,6 +58,12 @@ import { FaRegMessage } from "react-icons/fa6";function Navbar() {
               >
                 RIDER APPLY {/* Updated to use HTML entity */}
               </p>
+              <p
+      className={style.navItem}
+      onClick={handleRedirect}
+    >
+      DOWNLOAD APP
+    </p>
               <p
                 className={style.navItem}
                 onClick={() => logout()}
