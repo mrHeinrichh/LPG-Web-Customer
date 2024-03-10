@@ -24,10 +24,18 @@ export default function Feedback() {
   const [q5rating, setq5rating] = useState<number>(0);
 
   const [transaction, settransaction] = useState<any>(null);
+  const [validationErrors, setValidationErrors] = useState({
+    q1: false,
+    q2: false,
+    q3: false,
+    q4: false,
+    q5: false,
+  });
 
   useEffect(() => {
     getTransaction(id ?? "");
   }, [id]);
+
   const getTransaction = async (id: string) => {
     const { data } = await get(`transactions?filter={"_id": "${id}"}`);
     if (data.status == "success") {
@@ -38,9 +46,25 @@ export default function Feedback() {
   const handleChange = (event: any) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+    setValidationErrors((prevErrors) => ({ ...prevErrors, [name]: false }));
   };
 
   const createFeedback = async () => {
+    const requiredFields = ["q1", "q2", "q3", "q4", "q5"];
+    let hasErrors = false;
+
+    requiredFields.forEach((field) => {
+      if (formData[field as keyof typeof formData].trim() === "") {
+        setValidationErrors((prevErrors) => ({ ...prevErrors, [field]: true }));
+        hasErrors = true;
+      }
+    });
+
+    if (hasErrors) {
+      // Display an error message or take other actions
+      return;
+    }
+
     const { data } = await patch(`transactions/${id}/feedback`, {
       feedback: [
         {
@@ -73,7 +97,10 @@ export default function Feedback() {
             "Overall, how likely are you to recommend our mobile/web application to others based on your experience using it for LPG purchases?",
           rate: q5rating,
         },
+        
       ],
+      hasFeedback : true,
+
     });
 
     if (data.status == "success") router.push("/");
@@ -106,6 +133,7 @@ export default function Feedback() {
               name="q1"
               placeholder="How satisfied are you with the speed and responsiveness of our mobile/web application when browsing and making purchases?"
               onChange={handleChange}
+              error={validationErrors.q1 && "Field must be filled"}
             />
             <StarRating onClick={setq1Rate} rating={q1rating} />
 
@@ -113,6 +141,7 @@ export default function Feedback() {
               name="q2"
               placeholder="How satisfied are you with the approval and speed of your transaction in the system?"
               onChange={handleChange}
+              error={validationErrors.q2 && "Field must be filled"}
             />
             <StarRating onClick={setq2Rate} rating={q2rating} />
 
@@ -120,6 +149,7 @@ export default function Feedback() {
               name="q3"
               placeholder="How satisfied are you with the communication skills and punctuality of the delivery rider in delivering your LPG order?"
               onChange={handleChange}
+              error={validationErrors.q3 && "Field must be filled"}
             />
             <StarRating onClick={setq3Rate} rating={q3rating} />
 
@@ -127,6 +157,7 @@ export default function Feedback() {
               name="q4"
               placeholder="On a scale of 1 to 5, how would you describe your overall experience using our mobile/web application to purchase LPG products?"
               onChange={handleChange}
+              error={validationErrors.q4 && "Field must be filled"}
             />
             <StarRating onClick={setq4Rate} rating={q4rating} />
 
@@ -134,17 +165,12 @@ export default function Feedback() {
               name="q5"
               placeholder="Overall, how likely are you to recommend our mobile/web application to others based on your experience using it for LPG purchases?"
               onChange={handleChange}
+              error={validationErrors.q5 && "Field must be filled"}
             />
             <StarRating onClick={setq5Rate} rating={q5rating} />
 
             <div className="flex justify-center items-center p-10">
-              <Button
-                onClick={() => {
-                  createFeedback();
-                }}
-              >
-                Submit Feedback
-              </Button>
+              <Button onClick={createFeedback}>Submit Feedback</Button>
             </div>
           </>
         )}
