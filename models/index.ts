@@ -76,6 +76,7 @@ export interface IDeliveryModel<T, K> extends ITransactionModel {
   rider: K;
   // TODO: Add types
   feedback: any[];
+  
   // TODO: Add types
   statuses: any[];
   rating: number;

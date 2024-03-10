@@ -99,8 +99,7 @@ export default function Feedback() {
         },
         
       ],
-      hasFeedback : true,
-
+      
     });
 
     if (data.status == "success") router.push("/");

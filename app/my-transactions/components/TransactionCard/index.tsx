@@ -9,9 +9,10 @@ import { useRouter } from "next/navigation";
 export interface ITransactionCardProps {
   delivery: IDeliveryModel<string, string>;
   orderNumber: number;
+  hasFeedback?: boolean;
 }
 
-function TransactionCard({ delivery, orderNumber }: ITransactionCardProps) {
+function TransactionCard({ delivery, orderNumber, hasFeedback }: ITransactionCardProps) {
   const { Canvas } = useQRCode();
   const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
@@ -70,21 +71,17 @@ const showTransaction = validStatuses.includes(delivery.status);
             ""
           )}
         
-          {delivery.status == "Completed" ? (
+        {delivery.status === "Completed" && hasFeedback === false && (
             <button
-            className={`text-xl font-light underline-text`}
+              className={`text-xl font-light underline-text`}
               onClick={() => {
-
-                if (delivery.status === "Completed") {
-                   router.push(`/feedback?id=${delivery._id}`);
+                if (delivery.status === "Completed" && hasFeedback === false) {
+                  router.push(`/feedback?id=${delivery._id}`);
                 }
-              
               }}
             >
               Add Feedback
             </button>
-          ) : (
-            ""
           )}
         </div>
       </div>
