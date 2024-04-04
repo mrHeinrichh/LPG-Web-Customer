@@ -18,6 +18,11 @@ function TransactionCard({ delivery, orderNumber, hasFeedback }: ITransactionCar
   const [open, setOpen] = useState<boolean>(false);
   const validStatuses = ["Pending", "Approved", "On Going", "Cancelled", "Completed", "Declined"];
 const showTransaction = validStatuses.includes(delivery.status);
+  const discountPercentage = 20; 
+  const total = delivery.total;
+  const discountAmount = (total * discountPercentage) / 100;
+  const discountedAmount = total - discountAmount;
+  const deductedAmount = total - discountedAmount;
 
   const handleCancelOrder = async () => {
     try {
@@ -123,8 +128,21 @@ const showTransaction = validStatuses.includes(delivery.status);
                   Delivery Date: {delivery.updatedAt.toString()}
                 </p>
 
-                <p className="">Total Price: {parseToFiat(delivery.total)}</p>
               </div>
+              <div className="flex items-center justify-between">
+        <p>Discounted Amount ({discountPercentage}%): </p>
+        <p className="">{parseToFiat(discountedAmount)}</p>
+      </div>
+      <div className="flex items-center justify-between">
+        <p>Deducted from Total: </p>
+                <p className="">{parseToFiat(deductedAmount)}</p>
+                
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="">Total Price:</p>
+                <p className="">{parseToFiat(delivery.total)}</p>
+
+                </div>
             </div>
           </div>
         </div>
