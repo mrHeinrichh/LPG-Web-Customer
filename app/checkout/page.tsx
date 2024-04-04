@@ -214,7 +214,7 @@ export default function Checkout() {
             </div>
           </div>
           <div className="flex flex-col gap-3 justify-center items-center mx-auto pb-10">
-            <p className="text-xl font-bold">Needs to be assembled?</p>
+            <p className="text-xl font-bold">Needs to be installed?</p>
             <div className="flex items-center gap-3">
               <InputField
                 type="checkbox"

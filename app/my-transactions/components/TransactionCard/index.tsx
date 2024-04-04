@@ -107,7 +107,7 @@ const showTransaction = validStatuses.includes(delivery.status);
             <div className="flex flex-col gap-3">
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2">
-                  <p className="">Assemble</p>
+                  <p className="">Installed</p>
                   {delivery.installed ? (
                     <FaCheck color="#32CD32" size={15} />
                   ) : (
