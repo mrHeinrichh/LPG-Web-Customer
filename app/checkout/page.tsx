@@ -55,7 +55,7 @@ export default function Checkout() {
 
   });
 
-  const [assembly, setassembly] = useState<boolean>(false);
+  const [installed, setinstalled] = useState<boolean>(false);
   const [showDiscountImage, setShowDiscountImage] = useState(false); // Add this line
 
   const fileChange = async (event: any) => {
@@ -68,7 +68,7 @@ export default function Checkout() {
     const { name, value, checked, type } = event.target;
   
     if (type === "checkbox") {
-      setassembly(checked);
+      setinstalled(checked);
     } else {
       setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
     }
@@ -93,7 +93,7 @@ export default function Checkout() {
   const handleSubmit = () => {
     createTransaction({
       ...formData,
-      assembly,
+      installed,
       deliveryLocation: location.properties.formatted,
       long: location.properties.lon,
       lat: location.properties.lat,
@@ -218,7 +218,7 @@ export default function Checkout() {
             <div className="flex items-center gap-3">
               <InputField
                 type="checkbox"
-                name="assembly"
+                name="installed"
                 placeholder="Yes"
                 onChange={handleChange}
               />

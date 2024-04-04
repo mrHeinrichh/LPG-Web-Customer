@@ -68,7 +68,7 @@ export interface IDeliveryModel<T, K> extends ITransactionModel {
   houseLotBlk: string;
   paymentMethod: "COD" | "GCASH";
   status: DevliveryStatus;
-  assembly: boolean;
+  installed: boolean;
   deliveryDate: Date | string;
   barangay: string;
   total: number;
