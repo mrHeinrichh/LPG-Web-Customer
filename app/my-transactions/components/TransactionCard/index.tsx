@@ -71,18 +71,19 @@ const showTransaction = validStatuses.includes(delivery.status);
             ""
           )}
         
-        {delivery.status === "Completed" && hasFeedback === false && (
-            <button
-              className={`text-xl font-light underline-text`}
-              onClick={() => {
-                if (delivery.status === "Completed" && hasFeedback === false) {
-                  router.push(`/feedback?id=${delivery._id}`);
-                }
-              }}
-            >
-              Add Feedback
-            </button>
-          )}
+        {delivery.status === "Completed" && !hasFeedback && (
+  <button
+    className={`text-xl font-light underline-text`}
+    onClick={() => {
+      if (delivery.status === "Completed" && !hasFeedback) {
+        router.push(`/feedback?id=${delivery._id}`);
+      }
+    }}
+  >
+    Add Feedback
+  </button>
+)}
+
         </div>
       </div>
       <div className="flex gap-10">
