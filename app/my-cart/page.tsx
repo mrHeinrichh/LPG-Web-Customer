@@ -45,7 +45,7 @@ export default function MyCart() {
                   <br />
                   <p> Total: {parseToFiat(e.quantity * e.customerPrice)}</p>
                 </div>
-                <div className="ml-auto">
+                <div className="ml-auto p-9">
                   <input
                     type="checkbox"
                     style={{ transform: "scale(1.5)" }}
@@ -67,14 +67,14 @@ export default function MyCart() {
           ))}
 
           {/* Display total computed price */}
-          <div className="flex justify-end mt-4">
+          <div className="flex justify-end mt-4 pr-16">
             <p>
               Total:
               {parseToFiat(total)}
             </p>
           </div>
 
-          <div className="flex justify-between mt-8">
+          <div className="flex justify-around mt-8">
             <CartDeleteButton
               onClick={() => {
                 console.log(
