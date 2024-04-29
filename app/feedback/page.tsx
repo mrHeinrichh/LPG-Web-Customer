@@ -51,6 +51,7 @@ export default function Feedback() {
         setValidationErrors((prevErrors) => ({ ...prevErrors, [field]: true }));
         hasErrors = true;
       }
+      
     });
 
     if (hasErrors) {
@@ -101,6 +102,7 @@ export default function Feedback() {
                   Somewhat Dissatisfied
                 </button>
               </div>
+              {validationErrors.q1 && <p className="text-red-500">Please select an answer for this question</p>}
             </div>
 
             <div>
@@ -126,6 +128,7 @@ export default function Feedback() {
                   Complicated and Inconvenient
                 </button>
               </div>
+              {validationErrors.q2 && <p className="text-red-500">Please select an answer for this question</p>}
             </div>
 
             <div>
@@ -150,7 +153,8 @@ export default function Feedback() {
     >
       Needs more training and arrived late
     </button>
-  </div>
+              </div>
+              {validationErrors.q3 && <p className="text-red-500">Please select an answer for this question</p>}
 </div>
 
 <div>
@@ -175,7 +179,8 @@ export default function Feedback() {
     >
       Inconvenient, will stick to conventional purchasing method.
     </button>
-  </div>
+              </div>
+              {validationErrors.q4 && <p className="text-red-500">Please select an answer for this question</p>}
 </div>
 
 <div>
@@ -200,7 +205,8 @@ export default function Feedback() {
     >
       Unlikely to recommend to others
     </button>
-  </div>
+              </div>
+              {validationErrors.q5 && <p className="text-red-500">Please select an answer for this question</p>}
 </div>
 
 
